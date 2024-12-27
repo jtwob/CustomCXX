@@ -1,0 +1,51 @@
+# Build files
+/build/
+/CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+
+# Executables and libraries
+*.exe
+*.out
+*.o
+*.obj
+*.lib
+*.a
+*.so
+*.dll
+*.dylib
+
+# Debug files
+*.pdb
+*.ilk
+*.log
+
+# IDE-specific files
+# Visual Studio
+*.vcxproj*
+*.sln
+*.user
+*.opensdf
+*.tlog
+*.idb
+*.ipch
+
+# CLion
+.idea/
+*.iml
+cmake-build-*/
+
+# Mac-specific files
+.DS_Store
+
+# Windows-specific files
+Thumbs.db
+desktop.ini
+
+# Temporary files
+*.tmp
+*.swp
+*.bak
+*.swo
+*~
