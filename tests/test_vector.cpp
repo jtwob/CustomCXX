@@ -7,6 +7,10 @@ void test_push_back();
 void test_pop_back();
 void test_subscript_operator();
 void test_iterators();
+void test_clear();
+void test_insert();
+void test_erase();
+void test_move_semantics();
 
 void test_vector() {
     test_initialization();
