@@ -1,0 +1,32 @@
+name: Build and Test
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v3
+
+    - name: Install Dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y cmake g++ make
+
+    - name: Configure Project with CMake
+      run: |
+        cmake -S . -B build
+
+    - name: Build Project
+      run: |
+        cmake --build build
+
+    - name: Run Tests
+      run: |
+        ctest --test-dir build --output-on-failure
