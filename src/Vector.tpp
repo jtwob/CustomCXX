@@ -18,7 +18,7 @@ void Vector<T>::resize(size_t new_capacity) {
     }
     delete[] _data;
     _data = new_data;
-    _capacity = new_capacity;
+    _capacity = new_capacity; // Ensure capacity is updated
 }
 
 template <typename T>
@@ -39,7 +39,39 @@ void Vector<T>::pop_back() {
 
 template <typename T>
 T& Vector<T>::operator[](size_t index) {
+    if (index >= _size) {
+        throw std::out_of_range("Index out of range");
+    }
     return _data[index];
+}
+
+template <typename T>
+Vector<T>::Vector(std::initializer_list<T> list)
+    : _data(new T[list.size()]), _capacity(list.size()), _size(list.size()) {
+    size_t i = 0;
+    for (const auto& elem : list) {
+        _data[i++] = elem;
+    }
+}
+
+template <typename T>
+size_t Vector<T>::size() const {
+    return _size;
+}
+
+template <typename T>
+size_t Vector<T>::capacity() const {
+    return _capacity;
+}
+
+template <typename T>
+T* Vector<T>::begin() {
+    return _data;
+}
+
+template <typename T>
+T* Vector<T>::end() {
+    return _data + _size;
 }
 
 // Add more methods...
