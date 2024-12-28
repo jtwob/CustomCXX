@@ -46,6 +46,14 @@ T& Vector<T>::operator[](size_t index) {
 }
 
 template <typename T>
+const T& Vector<T>::operator[](size_t index) const {
+    if (index >= _size) {
+        throw std::out_of_range("Index out of range");
+    }
+    return _data[index];
+}
+
+template <typename T>
 Vector<T>::Vector(std::initializer_list<T> list)
     : _data(new T[list.size()]), _capacity(list.size()), _size(list.size()) {
     size_t i = 0;
