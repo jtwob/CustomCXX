@@ -11,12 +11,22 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
-    - name: Set up CMake
-      uses: lukka/setup-cmake@v3
-    - name: Configure and Build
+    - name: Checkout Code
+      uses: actions/checkout@v3
+
+    - name: Install Dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y cmake g++ make
+
+    - name: Configure Project with CMake
       run: |
         cmake -S . -B build
+
+    - name: Build Project
+      run: |
         cmake --build build
+
     - name: Run Tests
-      run: ctest --test-dir build --output-on-failure
+      run: |
+        ctest --test-dir build --output-on-failure
