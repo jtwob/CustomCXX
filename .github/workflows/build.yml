@@ -1,0 +1,22 @@
+name: Build and Test
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up CMake
+      uses: lukka/setup-cmake@v3
+    - name: Configure and Build
+      run: |
+        cmake -S . -B build
+        cmake --build build
+    - name: Run Tests
+      run: ctest --test-dir build --output-on-failure
