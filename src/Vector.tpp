@@ -82,6 +82,68 @@ T* Vector<T>::end() {
     return _data + _size;
 }
 
+template <typename T>
+void Vector<T>::clear() {
+    _size = 0; // Reset the size to zero
+}
+
+template <typename T>
+void Vector<T>::insert(size_t index, const T& value) {
+    if (index > _size) {
+        throw std::out_of_range("Index out of range");
+    }
+
+    if (_size == _capacity) {
+        resize(_capacity == 0 ? 1 : _capacity * 2); // Ensure capacity
+    }
+
+    // Shift elements to the right
+    for (size_t i = _size; i > index; --i) {
+        _data[i] = std::move(_data[i - 1]);
+    }
+
+    _data[index] = value; // Insert the value
+    ++_size;
+}
+
+template <typename T>
+void Vector<T>::erase(size_t index) {
+    if (index >= _size) {
+        throw std::out_of_range("Index out of range");
+    }
+
+    // Shift elements to the left
+    for (size_t i = index; i < _size - 1; ++i) {
+        _data[i] = std::move(_data[i + 1]);
+    }
+
+    --_size; // Decrease the size
+}
+
+template <typename T>
+Vector<T>::Vector(Vector&& other) noexcept
+    : _data(other._data), _capacity(other._capacity), _size(other._size) {
+    other._data = nullptr;
+    other._capacity = 0;
+    other._size = 0;
+}
+
+template <typename T>
+Vector<T>& Vector<T>::operator=(Vector&& other) noexcept {
+    if (this != &other) {
+        delete[] _data; // Clean up existing resources
+
+        _data = other._data;
+        _capacity = other._capacity;
+        _size = other._size;
+
+        other._data = nullptr;
+        other._capacity = 0;
+        other._size = 0;
+    }
+    return *this;
+}
+
 // Add more methods...
 
 } // namespace CustomCXX
