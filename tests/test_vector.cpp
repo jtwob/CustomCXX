@@ -282,7 +282,20 @@ void test_shrink_to_fit(){
     std::cout << "Shrink to fit tests passed!" << std::endl;
 }
 
+void test_reverse_iterators(){
+    CustomCXX::Vector<int> vec = {1, 2, 3};
 
+    int expected = 3;
+    for(auto it = vec.rbegin(); it != vec.rend(); ++it){
+        assert(*it == expected--);
+    }
+
+    // Test reverse iterators on empty vector
+    CustomCXX::Vector<int> empty_vec;
+    assert(empty_vec.rbegin() == empty_vec.rend());
+
+    std::cout << "Reverse iterators tests passed!" << std::endl;
+}
 
 int main() {
     test_vector();
