@@ -22,6 +22,11 @@ void test_vector() {
     test_insert();
     test_erase();
     test_move_semantics();
+    test_copy_constructor();
+    test_copy_assignment();
+    test_reserve();
+    test_shrink_to_fit();
+    test_reverse_iterators();
     std::cout << "All tests passed!" << std::endl;
 }
 
@@ -205,6 +210,50 @@ void test_move_semantics() {
     }
 
     std::cout << "Move semantics tests passed!" << std::endl;
+}
+
+void test_copy_constructor(){
+    CustomCXX::Vector<int> vec = {1, 2, 3};
+    CustomCXX::Vector<int> copy(vec);
+
+    // Ensure copy has the same elements;
+    assert(copy.size() == vec.size());
+    for(size_t i = 0; i < vec.size(); ++i){
+        assert(copy[i] == vec[i]);
+    }
+
+    // Ensure deep copy
+    copy[0] = 10;
+    assert(copy[0] != vec[0]);
+
+    std::cout << "Copy constructor tests passed!" << std::endl;
+}
+
+void test_copy_assignment(){
+    CustomCXX::Vector<int> vec = {1, 2, 3};
+    CustomCXX::Vector<int> copy;
+    copy = vec;
+
+    // Ensure copy has the same elements
+    assert(copy.size() == vec.size());
+    for(size_t i = 0; i < vec.size(); ++i){
+        assert(copy[i] == vec[i]);
+    }
+
+    // Ensure deep copy
+    copy[1] = 20;
+    assert(copy[1] != vec[1]);
+
+    // Test self-assignment
+    copy = copy;
+    assert(copy.size() == 3);
+    assert(copy[0] == 1);
+
+    std::cout << "Copy assignment tests passed!" << std::endl;
+}
+
+void test_reserve(){
+    
 }
 
 int main() {
