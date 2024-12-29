@@ -144,6 +144,53 @@ Vector<T>& Vector<T>::operator=(Vector&& other) noexcept {
     return *this;
 }
 
+template <typename T>
+Vector<T>::Vector(const Vector& other)
+    :_data(new T[other._capacity]), _capacity(other._capacity), _size(other._size) {
+    for (size_t i = 0; i < _size; ++i) {
+        _data[i] = other._data[i];
+    }
+}
+
+template <typename T>
+Vector<T>& Vector<T>::operator=(const Vector& other) {
+    if (this != &other) { // Avoid self-assignment
+        delete[] _data;
+
+        _data = new T[other._capacity];
+        _capacity = other._capacity;
+        _size = other._size;
+
+        for (size_t i = 0; i < _size; ++i) {
+            _data[i] = other._data[i];
+        }
+    }
+    return *this;
+}
+
+template <typename T>
+void Vector<T>::reserve(size_t new_capacity) {
+    if(new_capacity > _capacity){
+        resize(new_capacity); // Use resize to handle memory reallocation
+    }
+}
+
+template <typename T>
+void Vector<T>::shrink_to_fit() {
+    if (_capacity > _size) {
+        resize(_size); // Reduce capacity to match size
+    }
+}
+
+template <typename T>
+T* Vector<T>::rbegin() {
+    return _data + _size - 1; // Pointer to the last element
+}
+
+template <typename T>
+T* Vector<T>::rend() {
+    return _data - 1; // Pointer to one before the first element
+}
 // Add more methods...
 
 } // namespace CustomCXX
