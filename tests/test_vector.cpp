@@ -11,6 +11,11 @@ void test_clear();
 void test_insert();
 void test_erase();
 void test_move_semantics();
+void test_copy_constructor();
+void test_copy_assignment();
+void test_reserve();
+void test_shrink_to_fit();
+void test_reverse_iterators();
 
 void test_vector() {
     test_initialization();
