@@ -253,8 +253,36 @@ void test_copy_assignment(){
 }
 
 void test_reserve(){
-    
+    CustomCXX::Vector<int> vec;
+    vec.reserve(10);
+    assert(vec.capacity() >= 10);
+    assert(vec.size() == 0);
+
+    // Reserve less than current capacity
+    size_t old_capacity = vec.capacity();
+    vec.reserve(5);
+    assert(vec.capacity() == old_capacity);
+
+    std::cout << "Reserve tests passed!" << std::endl;
 }
+
+void test_shrink_to_fit(){
+    CustomCXX::Vector<int> vec = {1, 2, 3};
+    vec.reserve(10);
+    size_t old_capacity = vec.capacity();
+    vec.shrink_to_fit();
+    assert(vec.capacity() == vec.size());
+    assert(vec.capacity() < old_capacity);
+
+    // Ensure no data loss
+    for(size_t i = 0; i < vec.size(); ++i){
+        assert(vec[i] == i + 1);
+    }
+
+    std::cout << "Shrink to fit tests passed!" << std::endl;
+}
+
+
 
 int main() {
     test_vector();
