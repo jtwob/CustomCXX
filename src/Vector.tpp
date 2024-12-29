@@ -184,7 +184,7 @@ void Vector<T>::shrink_to_fit() {
 
 template <typename T>
 T* Vector<T>::rbegin() {
-    return _data + _size - 1; // Pointer to the last element
+    return _size > 0 ? (_data + _size - 1) : _data; // Pointer to the last element or Return _data if empty
 }
 
 template <typename T>
