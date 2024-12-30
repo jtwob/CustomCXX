@@ -136,6 +136,39 @@ void List<T>::insert(size_t index, const T& value) {
     ++list_size;
 }
 
+template <typename T>
+void List<T>::erase(size_t index) {
+    if (index >= list_size) {
+        throw std::out_of_range("Index out of range");
+    }
 
+    Node* current = head;
+
+    if (index == 0) { // Erase from the beginning
+        head = head->next;
+        if (head) {
+            head->prev = nullptr;
+        } else {
+            tail = nullptr; // List is now empty
+        }
+    } else if (index == list_size - 1) { // Erase from the end
+        current = tail;
+        tail = tail->prev;
+        if (tail) {
+            tail->next = nullptr;
+        } else {
+            head = nullptr; // List is now empty
+        }
+    } else { // Erase from the middle
+        for (size_t i = 0; i < index; ++i) {
+            current = current->next;
+        }
+        current->prev->next = current->next;
+        current->next->prev = current->prev;
+    }
+
+    delete current;
+    --list_size;
+}
 
 } // namespace CustomCXX

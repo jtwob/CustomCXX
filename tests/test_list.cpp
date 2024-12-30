@@ -52,27 +52,27 @@ void test_insert() {
     std::cout << "Insert tests passed!" << std::endl;
 }
 
-// void test_erase() {
-//     CustomCXX::List<int> list;
-//     list.push_back(1);
-//     list.push_back(2);
-//     list.push_back(3);
+void test_erase() {
+    CustomCXX::List<int> list;
+    list.push_back(1);
+    list.push_back(2);
+    list.push_back(3);
 
-//     // Erase from the beginning
-//     list.erase(0);
-//     assert(list.front() == 2);
+    // Erase from the beginning
+    list.erase(0);
+    assert(list.front() == 2);
 
-//     // Erase from the middle
-//     list.push_back(4);
-//     list.erase(1);
-//     assert(list.at(1) == 4);
+    // Erase from the middle
+    list.push_back(4);
+    list.erase(1);
+    assert(list.at(1) == 4);
 
-//     // Erase from the end
-//     list.pop_back();
-//     assert(list.back() == 2);
+    // Erase from the end
+    list.pop_back();
+    assert(list.back() == 2);
 
-//     std::cout << "Erase tests passed!" << std::endl;
-// }
+    std::cout << "Erase tests passed!" << std::endl;
+}
 
 // void test_reverse() {
 //     CustomCXX::List<int> list;
