@@ -95,23 +95,23 @@ void test_reverse() {
     std::cout << "Reverse tests passed!" << std::endl;
 }
 
-// void test_iterators() {
-//     CustomCXX::List<int> list = {1, 2, 3};
+void test_iterators() {
+    CustomCXX::List<int> list = {1, 2, 3};
 
-//     // Forward iteration
-//     int expected = 1;
-//     for (auto node = list.begin(); node != list.end(); node = node->next) {
-//         assert(node->value == expected++);
-//     }
+    // Forward iteration
+    int expected = 1;
+    for (auto node = list.begin(); node != list.end(); node = node->next) {
+        assert(node->value == expected++);
+    }
 
-//     // Reverse iteration
-//     expected = 3;
-//     for (auto node = list.rbegin(); node != list.rend(); node = node->prev) {
-//         assert(node->value == expected--);
-//     }
+    // Reverse iteration
+    expected = 3;
+    for (auto node = list.rbegin(); node != list.rend(); node = node->prev) {
+        assert(node->value == expected--);
+    }
 
-//     std::cout << "Iterator tests passed!" << std::endl;
-// }
+    std::cout << "Iterator tests passed!" << std::endl;
+}
 
 int main() {
     test_list();

@@ -189,4 +189,24 @@ void List<T>::reverse() {
     tail = temp;
 }
 
+template <typename T>
+typename List<T>::Node* List<T>::begin() {
+    return head;
+}
+
+template <typename T>
+typename List<T>::Node* List<T>::end() {
+    return nullptr; // End iterator points to one past the last element
+}
+
+template <typename T>
+typename List<T>::Node* List<T>::rbegin() {
+    return tail;
+}
+
+template <typename T>
+typename List<T>::Node* List<T>::rend() {
+    return nullptr; // Reverse end iterator points before the first element
+}
+
 } // namespace CustomCXX

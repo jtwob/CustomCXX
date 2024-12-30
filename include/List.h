@@ -46,6 +46,9 @@ public:
     // Iterators
     Node* begin();
     Node* end();
+    Node* rbegin();
+    Node* rend();
+
 };
 
 } // namespace CustomCXX
