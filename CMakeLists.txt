@@ -13,7 +13,10 @@ add_library(CustomCXX INTERFACE)
 target_include_directories(CustomCXX INTERFACE include)
 
 # Add the test executable
-add_executable(CustomCXXTests tests/test_vector.cpp)
+add_executable(CustomCXXTests 
+    tests/test_vector.cpp
+    tests/test_list.cpp
+)
 target_link_libraries(CustomCXXTests PRIVATE CustomCXX)
 
 # Enable testing and register the test

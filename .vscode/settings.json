@@ -3,6 +3,7 @@
         "xstring": "cpp",
         "xutility": "cpp",
         "*.tpp": "cpp",
-        "ostream": "cpp"
+        "ostream": "cpp",
+        "xlocinfo": "cpp"
     }
 }
