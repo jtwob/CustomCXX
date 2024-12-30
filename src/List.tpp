@@ -98,4 +98,44 @@ bool List<T>::empty() const {
     return list_size == 0;
 }
 
+template <typename T>
+void List<T>::insert(size_t index, const T& value) {
+    if (index > list_size) {
+        throw std::out_of_range("Index out of range");
+    }
+
+    Node* new_node = new Node(value);
+
+    if (index == 0) { // Insert at the beginning
+        new_node->next = head;
+        if (head) {
+            head->prev = new_node;
+        }
+        head = new_node;
+        if (!tail) {
+            tail = new_node; // Update tail if list was empty
+        }
+    } else if (index == list_size) { // Insert at the end
+        new_node->prev = tail;
+        if (tail) {
+            tail->next = new_node;
+        }
+        tail = new_node;
+    } else { // Insert in the middle
+        Node* current = head;
+        for (size_t i = 0; i < index; ++i) {
+            current = current->next;
+        }
+        new_node->next = current;
+        new_node->prev = current->prev;
+        if (current->prev) {
+            current->prev->next = new_node;
+        }
+        current->prev = new_node;
+    }
+    ++list_size;
+}
+
+
+
 } // namespace CustomCXX
