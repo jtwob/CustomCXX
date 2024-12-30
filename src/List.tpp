@@ -171,4 +171,22 @@ void List<T>::erase(size_t index) {
     --list_size;
 }
 
+template <typename T>
+void List<T>::reverse() {
+    Node* current = head;
+    Node* temp = nullptr;
+
+    while (current) {
+        temp = current->prev;
+        current->prev = current->next;
+        current->next = temp;
+        current = current->prev; // Move to the next node in the original order
+    }
+
+    // Swap head and tail
+    temp = head;
+    head = tail;
+    tail = temp;
+}
+
 } // namespace CustomCXX

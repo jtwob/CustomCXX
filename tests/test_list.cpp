@@ -74,26 +74,26 @@ void test_erase() {
     std::cout << "Erase tests passed!" << std::endl;
 }
 
-// void test_reverse() {
-//     CustomCXX::List<int> list;
+void test_reverse() {
+    CustomCXX::List<int> list;
 
-//     // Reverse an empty list
-//     list.reverse();
-//     assert(list.size() == 0);
+    // Reverse an empty list
+    list.reverse();
+    assert(list.size() == 0);
 
-//     // Reverse a single-element list
-//     list.push_back(1);
-//     list.reverse();
-//     assert(list.front() == 1 && list.back() == 1);
+    // Reverse a single-element list
+    list.push_back(1);
+    list.reverse();
+    assert(list.front() == 1 && list.back() == 1);
 
-//     // Reverse a multi-element list
-//     list.push_back(2);
-//     list.push_back(3);
-//     list.reverse();
-//     assert(list.front() == 3 && list.back() == 1);
+    // Reverse a multi-element list
+    list.push_back(2);
+    list.push_back(3);
+    list.reverse();
+    assert(list.front() == 3 && list.back() == 1);
 
-//     std::cout << "Reverse tests passed!" << std::endl;
-// }
+    std::cout << "Reverse tests passed!" << std::endl;
+}
 
 // void test_iterators() {
 //     CustomCXX::List<int> list = {1, 2, 3};
