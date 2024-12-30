@@ -12,13 +12,23 @@ include_directories(include)
 add_library(CustomCXX INTERFACE)
 target_include_directories(CustomCXX INTERFACE include)
 
-# Add the test executable
-add_executable(CustomCXXTests 
+# Enable tests
+enable_testing()
+
+# Add the test executables
+add_executable(CustomCXXTests_Vector
     tests/test_vector.cpp
+)
+target_link_libraries(CustomCXXTests_Vector PRIVATE CustomCXX)
+
+# Register Vector tests
+add_test(NAME CustomCXXTests_Vector COMMAND CustomCXXTests_Vector)
+
+add_executable(CustomCXXTests_List
     tests/test_list.cpp
 )
-target_link_libraries(CustomCXXTests PRIVATE CustomCXX)
+target_link_libraries(CustomCXXTests_List PRIVATE CustomCXX)
 
-# Enable testing and register the test
-enable_testing()
-add_test(NAME CustomCXXTests COMMAND CustomCXXTests)
+# Register List tests
+add_test(NAME CustomCXXTests_List COMMAND CustomCXXTests_List)
+
