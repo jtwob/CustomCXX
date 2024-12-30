@@ -11,12 +11,13 @@ private:
     struct Node {
         T value;
         Node* next;
-        Node(T val) : value(val), next(nullptr) {}
+        Node* prev; // Add this for a doubly linked list
+        Node(T val) : value(val), next(nullptr), prev(nullptr) {}
     };
 
-    Node* head; // Pointer to the first node
-    Node* tail; // Pointer to the last node
-    size_t list_size; // Number of elements in the list
+    Node* head;
+    Node* tail;
+    size_t list_size;
 
 public:
     // Constructors and Destructor
@@ -29,6 +30,9 @@ public:
     void pop_front();
     void pop_back();
     void clear();
+    void insert(size_t index, const T& value); // Insert at a specific position
+    void erase(size_t index); // Remove at a specific position
+    void reverse(); // Reverse the list
 
     // Access
     T& front();
@@ -39,8 +43,9 @@ public:
     size_t size() const;
     bool empty() const;
 
-    // Iterators (Optional)
-    // Add later if needed
+    // Iterators
+    Node* begin();
+    Node* end();
 };
 
 } // namespace CustomCXX
