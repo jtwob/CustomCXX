@@ -6,6 +6,13 @@ template <typename T>
 List<T>::List() : head(nullptr), tail(nullptr), list_size(0) {}
 
 template <typename T>
+List<T>::List(std::initializer_list<T> list) : head(nullptr), tail(nullptr), list_size(0) {
+    for (const auto& value : list) {
+        push_back(value); // Reuse push_back to add elements
+    }
+}
+
+template <typename T>
 List<T>::~List() {
     clear(); // Delete all nodes
 }

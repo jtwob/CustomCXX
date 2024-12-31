@@ -22,6 +22,7 @@ private:
 public:
     // Constructors and Destructor
     List();
+    List(std::initializer_list<T> list); // Initializer list constructor
     ~List();
 
     // Modifiers
