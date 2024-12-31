@@ -34,6 +34,6 @@ cmake --build .
 ## Running Tests
 Build and run the tests:
 ```bash
-ctest --test-dir build --output-on-failure
+ ctest --test-dir build -C Debug --output-on-failure
 ```
 
