@@ -1,12 +1,10 @@
 # CustomCXX
-
-CustomCXX is a modern, lightweight, and educational C++ library built from scratch, inspired by the Standard Template Library (STL). The goal of this project is to deepen understanding of C++ fundamentals and showcase clean, efficient, and extensible code.
+A lightweight C++ library implementing core data structures (`Vector` and `List`) with robust features and test coverage.
 
 ## Features
-- Custom implementations of common STL components like `Vector`, `List`, and more.
-- Self-contained algorithms (e.g., `sort`, `binary_search`).
-- Lightweight and dependency-free design.
-- Comprehensive unit tests and documentation.
+- Dynamic array (`Vector`) with push-back, resizing, and iterator support.
+- Doubly linked list (`List`) with insertion, deletion, and traversal.
+- Fully templated for generic use.
 
 ## Why CustomCXX?
 This project is designed as a learning tool for aspiring C++ developers. It demonstrates:
@@ -19,8 +17,22 @@ This project is designed as a learning tool for aspiring C++ developers. It demo
 - C++17 or later
 - CMake (for building the project)
 
-### Building the Project
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/jtwob/CustomCXX.git
-   cd CustomCXX
+### Installation
+Clone the repository and build using CMake:
+```bash
+git clone https://github.com/jtwob/CustomCXX.git
+cd CustomCXX
+mkdir build && cd build
+cmake ..
+cmake --build .
+```
+## Usage
+
+#include "Vector.h"
+#include "List.h"
+
+## Running Tests
+Build and run the tests:
+```bash
+ctest --test-dir build --output-on-failure
+```
