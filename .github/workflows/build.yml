@@ -1,4 +1,4 @@
-name: C++ CI
+name: Build and Test
 
 on:
   push:
@@ -7,19 +7,28 @@ on:
   pull_request:
     branches:
       - main
-
 jobs:
-  build-and-test:
+  build:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v3
-      - name: Set up C++
-        uses: lukka/setup-cpp@v1
-        with:
-          compiler: clang
-      - name: Configure CMake
-        run: cmake -S . -B build
-      - name: Build
-        run: cmake --build build
-      - name: Run Tests
-        run: ctest --test-dir build --output-on-failure
+    - name: Checkout Code
+      uses: actions/checkout@v3
+      
+
+    - name: Install Dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y cmake g++ make
+
+    - name: Configure Project with CMake
+      run: |
+        cmake -S . -B build
+
+    - name: Build Project
+      run: |
+        cmake --build build
+
+    - name: Run Tests
+      run: |
+        ctest --test-dir build --output-on-failure
