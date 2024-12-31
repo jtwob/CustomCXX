@@ -31,6 +31,7 @@ void List<T>::push_back(const T& value) {
     Node* new_node = new Node(value);
     if (tail) {
         tail->next = new_node;
+        new_node->prev = tail;
     } else {
         head = new_node; // If list was empty, head is also updated
     }
@@ -87,13 +88,21 @@ T& List<T>::back() {
 
 template <typename T>
 T& List<T>::at(size_t index) {
-    if (index >= list_size) throw std::out_of_range("Index out of range");
+    if (index >= list_size) {
+        throw std::out_of_range("Index out of range");
+    }
+
     Node* current = head;
     for (size_t i = 0; i < index; ++i) {
+        if (!current) {
+            throw std::runtime_error("Invalid traversal: encountered nullptr");
+        }
         current = current->next;
     }
+
     return current->value;
 }
+
 
 template <typename T>
 size_t List<T>::size() const {
@@ -151,31 +160,50 @@ void List<T>::erase(size_t index) {
 
     Node* current = head;
 
-    if (index == 0) { // Erase from the beginning
-        head = head->next;
+    // Traverse to the node at the specified index
+    for (size_t i = 0; i < index; ++i) {
+        current = current->next;
+    }
+
+    // Case 1: Erase the first node
+    if (current == head) {
+        head = current->next;
         if (head) {
             head->prev = nullptr;
         } else {
-            tail = nullptr; // List is now empty
+            tail = nullptr; // List becomes empty
         }
-    } else if (index == list_size - 1) { // Erase from the end
-        current = tail;
-        tail = tail->prev;
+    }
+    // Case 2: Erase the last node
+    else if (current == tail) {
+        tail = current->prev;
         if (tail) {
             tail->next = nullptr;
         } else {
-            head = nullptr; // List is now empty
+            head = nullptr; // List becomes empty
         }
-    } else { // Erase from the middle
-        for (size_t i = 0; i < index; ++i) {
-            current = current->next;
+    }
+    // Case 3: Erase a middle node
+    else {
+        Node* prev_node = current->prev;
+        Node* next_node = current->next;
+
+        if (prev_node) {
+            prev_node->next = next_node; // Link previous node to next
         }
-        current->prev->next = current->next;
-        current->next->prev = current->prev;
+
+        if (next_node) {
+            next_node->prev = prev_node; // Link next node to previous
+        }
     }
 
-    delete current;
+    delete current; // Free the memory of the erased node
     --list_size;
+
+    // Ensure consistency when the list becomes empty
+    if (list_size == 0) {
+        head = tail = nullptr;
+    }
 }
 
 template <typename T>
