@@ -116,8 +116,8 @@ void test_iterators() {
 int main() {
     test_list();
     test_insert();
-    // test_erase();
-    // test_reverse();
-    // test_iterators();
+    test_erase();
+    test_reverse();
+    test_iterators();
     return 0;
 }
