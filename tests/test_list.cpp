@@ -158,18 +158,40 @@ void test_iterators() {
 }
 
 void test_list_sort() {
-    CustomCXX::List<int> list = {3, 1, 2};
+    using List = CustomCXX::List<int>;
 
-    // Expect an exception since sort() is not implemented
-    try {
-        list.sort();
-        assert(false); // Fail if no exception is thrown
-    } catch (const std::logic_error& e) {
-        assert(std::string(e.what()) == "Not implemented");
-    }
+    // Basic Case
+    List list = {3, 1, 4, 1, 5, 9};
+    list.sort();
+    assert(list == List({1, 1, 3, 4, 5, 9}));
 
-    std::cout << "List sort tests build successfully but fail as expected." << std::endl;
+    // Already Sorted
+    List sorted_list = {1, 2, 3, 4, 5};
+    sorted_list.sort();
+    assert(sorted_list == List({1, 2, 3, 4, 5}));
+
+    // Reverse Sorted
+    List reverse_list = {5, 4, 3, 2, 1};
+    reverse_list.sort();
+    assert(reverse_list == List({1, 2, 3, 4, 5}));
+
+    // Empty List
+    List empty_list;
+    empty_list.sort();
+    assert(empty_list.size() == 0);
+
+    // Single Element
+    List single_list = {42};
+    single_list.sort();
+    assert(single_list == List({42}));
+
+    // Descending Order
+    reverse_list.sort(std::greater<int>());
+    assert(reverse_list == List({5, 4, 3, 2, 1}));
+
+    std::cout << "List sort tests passed!" << std::endl;
 }
+
 
 int main() {
     test_list();

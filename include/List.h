@@ -19,6 +19,15 @@ private:
     Node* tail;
     size_t list_size;
 
+    template <typename Compare>
+    Node* merge_sort(Node* node, Compare comp); // Recursive merge sort
+
+    template <typename Compare>
+    Node* merge(Node* left, Node* right, Compare comp); // Merge two sorted lists
+
+    Node* find_middle(Node* node); // Helper to find the middle of the list
+
+
 public:
     // Constructors and Destructor
     List();
@@ -54,6 +63,10 @@ public:
     Node* end();
     Node* rbegin();
     Node* rend();
+
+    // Comparison ops
+    bool operator==(const List& other) const;
+
 
 };
 

@@ -245,16 +245,85 @@ typename List<T>::Node* List<T>::rend() {
 }
 
 template <typename T>
+template <typename Compare>
+typename List<T>::Node* List<T>::merge_sort(Node* node, Compare comp) {
+    if (!node || !node->next) {
+        return node; // Base case: empty or single node
+    }
+
+    // Split the list into two halves
+    Node* middle = find_middle(node);
+    Node* second_half = middle->next;
+    middle->next = nullptr;
+
+    // Sort each half recursively
+    Node* left = merge_sort(node, comp);
+    Node* right = merge_sort(second_half, comp);
+
+    // Merge the sorted halves
+    return merge(left, right, comp);
+}
+
+template <typename T>
+typename List<T>::Node* List<T>::find_middle(Node* node) {
+    Node* slow = node;
+    Node* fast = node;
+
+    while (fast->next && fast->next->next) {
+        slow = slow->next;
+        fast = fast->next->next;
+    }
+
+    return slow;
+}
+
+template <typename T>
+template <typename Compare>
+typename List<T>::Node* List<T>::merge(Node* left, Node* right, Compare comp) {
+    if (!left) return right;
+    if (!right) return left;
+
+    Node* result = nullptr;
+
+    if (comp(left->value, right->value)) {
+        result = left;
+        result->next = merge(left->next, right, comp);
+    } else {
+        result = right;
+        result->next = merge(left, right->next, comp);
+    }
+
+    return result;
+}
+
+
+template <typename T>
 void List<T>::sort() {
-    // TODO: Implement ascending sort
-    throw std::logic_error("Not implemented");
+    head = merge_sort(head, std::less<T>());
 }
 
 template <typename T>
 template <typename Compare>
 void List<T>::sort(Compare comp) {
-    // TODO: Implement custom comparator sort
-    throw std::logic_error("Not implemented");
+    head = merge_sort(head, comp);
 }
+
+template <typename T>
+bool List<T>::operator==(const List& other) const {
+    Node* this_current = head;
+    Node* other_current = other.head;
+
+    while (this_current && other_current) {
+        if (this_current->value != other_current->value) {
+            return false; // Mismatched elements
+        }
+        this_current = this_current->next;
+        other_current = other_current->next;
+    }
+
+    // Lists are equal if both pointers are null
+    return this_current == nullptr && other_current == nullptr;
+}
+
 
 } // namespace CustomCXX
