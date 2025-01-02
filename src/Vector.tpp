@@ -1,4 +1,5 @@
 #include "../include/Vector.h"
+#include <iostream>
 
 namespace CustomCXX {
 
@@ -193,17 +194,87 @@ T* Vector<T>::rend() {
 }
 
 template <typename T>
+template <typename Compare>
+void Vector<T>::merge_sort(size_t left, size_t right, Compare comp) {
+    if (left >= right) {
+        return; // Base case: single element or invalid range
+    }
+    size_t mid = left + (right - left) / 2;
+
+    merge_sort(left, mid, comp);
+    merge_sort(mid + 1, right, comp);
+
+    merge(left, mid, right, comp);
+    
+}
+
+template <typename T>
+template <typename Compare>
+void Vector<T>::merge(size_t left, size_t mid, size_t right, Compare comp) {
+    size_t n1 = mid - left + 1;
+    size_t n2 = right - mid;
+
+    T* leftArray = new T[n1];
+    T* rightArray = new T[n2];
+
+    for (size_t i = 0; i < n1; ++i) {
+        leftArray[i] = _data[left + i];
+    }
+    for (size_t j = 0; j < n2; ++j) {
+        rightArray[j] = _data[mid + 1 + j];
+    }
+
+    // Merge the temporary arrays back into _data
+    size_t i = 0, j = 0, k = left;
+    while (i < n1 && j < n2) {
+        if (comp(leftArray[i], rightArray[j])) {
+            _data[k++] = leftArray[i++];
+        } else {
+            _data[k++] = rightArray[j++];
+        }
+    }
+    while (i < n1) {
+        _data[k++] = leftArray[i++];
+    }
+    while (j < n2) {
+        _data[k++] = rightArray[j++];
+    }
+
+    delete[] leftArray;
+    delete[] rightArray;
+}
+
+template <typename T>
 void Vector<T>::sort() {
-    // TODO: Implement ascending sort
-    throw std::logic_error("Not implemented");
+    if (_size == 0 || _size == 1) {
+        return; // No need to sort
+    }
+    merge_sort(0, _size - 1, std::less<T>());
 }
 
 template <typename T>
 template <typename Compare>
 void Vector<T>::sort(Compare comp) {
-    // TODO: Implement custom comparator sort
-    throw std::logic_error("Not implemented");
+    if (_size == 0 || _size == 1) {
+        return; // No need to sort
+    }
+    merge_sort(0, _size - 1, comp);
 }
+
+
+template <typename T>
+bool Vector<T>::operator==(const Vector<T>& other) const {
+    if (_size != other._size) {
+        return false; // Sizes must match
+    }
+    for (size_t i = 0; i < _size; ++i) {
+        if (_data[i] != other._data[i]) {
+            return false; // Elements must match
+        }
+    }
+    return true; // All elements match
+}
+
 // Add more methods...
 
 } // namespace CustomCXX

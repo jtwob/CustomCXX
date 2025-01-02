@@ -16,6 +16,13 @@ private:
 
     void resize(size_t new_capacity); // Resizes the internal storage
 
+    template <typename Compare>
+    void merge(size_t left, size_t mid, size_t right, Compare comp);
+
+    template <typename Compare>
+    void merge_sort(size_t left, size_t right, Compare comp);
+
+
 public:
     // Constructors and Destructor
     Vector();                              // Default constructor
@@ -58,7 +65,8 @@ public:
     T* rend();   // Returns pointer to one before the first element
 
 
-    // Copy Semantics
+    // Comparison ops
+    bool operator==(const Vector& other) const;
 };
 
 } // namespace CustomCXX

@@ -312,18 +312,40 @@ void test_reverse_iterators() {
 }
 
 void test_vector_sort() {
-    CustomCXX::Vector<int> vec = {3, 1, 2};
+    using Vector = CustomCXX::Vector<int>;
 
-    // Expect an exception since sort() is not implemented
-    try {
-        vec.sort();
-        assert(false); // Fail if no exception is thrown
-    } catch (const std::logic_error& e) {
-        assert(std::string(e.what()) == "Not implemented");
-    }
+    // Basic Case
+    Vector vec = {3, 1, 4, 1, 5, 9};
+    vec.sort();
+    assert(vec == Vector({1, 1, 3, 4, 5, 9}));
 
-    std::cout << "Vector sort tests build successfully but fail as expected." << std::endl;
+    // Already Sorted
+    Vector sorted_vec = {1, 2, 3, 4, 5};
+    sorted_vec.sort();
+    assert(sorted_vec == Vector({1, 2, 3, 4, 5}));
+
+    // Reverse Sorted
+    Vector reverse_vec = {5, 4, 3, 2, 1};
+    reverse_vec.sort();
+    assert(reverse_vec == Vector({1, 2, 3, 4, 5}));
+
+    // Empty Vector
+    Vector empty_vec;
+    empty_vec.sort();
+    assert(empty_vec.size() == 0);
+
+    // Single Element
+    Vector single_vec = {42};
+    single_vec.sort();
+    assert(single_vec == Vector({42}));
+
+    // Descending Order
+    reverse_vec.sort(std::greater<int>());
+    assert(reverse_vec == Vector({5, 4, 3, 2, 1}));
+
+    std::cout << "Vector sort tests passed!" << std::endl;
 }
+
 
 int main() {
     test_vector();
