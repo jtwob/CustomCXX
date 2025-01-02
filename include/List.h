@@ -25,6 +25,11 @@ public:
     List(std::initializer_list<T> list); // Initializer list constructor
     ~List();
 
+    // Sorting
+    void sort(); // Default ascending sort
+    template <typename Compare>
+    void sort(Compare comp); // Custom comparator sort
+
     // Modifiers
     void push_front(const T& value);
     void push_back(const T& value);

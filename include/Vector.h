@@ -25,6 +25,11 @@ public:
     Vector(Vector&& other) noexcept;       // Move constructor
     ~Vector();                             // Destructor
 
+    // Sorting
+    void sort(); // Default ascending sort
+    template <typename Compare>
+    void sort(Compare comp); // Custom comparator sort
+
     // Assignment Operators
     Vector& operator=(const Vector& other); // Copy assignment operator
     Vector& operator=(Vector&& other) noexcept; // Move assignment operator

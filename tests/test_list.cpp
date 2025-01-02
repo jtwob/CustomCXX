@@ -2,7 +2,23 @@
 #include <iostream>
 #include <cassert>
 
+void test_basic_list();
+void test_insert();
+void test_erase();
+void test_reverse();
+void test_iterators();
+void test_list_sort();
+
 void test_list() {
+    test_basic_list();
+    test_insert();
+    test_erase();
+    test_reverse();
+    test_iterators();
+    test_list_sort();
+}
+
+void test_basic_list() {
     CustomCXX::List<int> list;
 
     // Test push_front and push_back
@@ -26,7 +42,7 @@ void test_list() {
     list.clear();
     assert(list.empty());
 
-    std::cout << "All List tests passed!" << std::endl;
+    std::cout << "Basic List tests passed!" << std::endl;
 }
 
 void test_insert() {
@@ -141,11 +157,21 @@ void test_iterators() {
     std::cout << "Iterator tests passed!" << std::endl;
 }
 
+void test_list_sort() {
+    CustomCXX::List<int> list = {3, 1, 2};
+
+    // Expect an exception since sort() is not implemented
+    try {
+        list.sort();
+        assert(false); // Fail if no exception is thrown
+    } catch (const std::logic_error& e) {
+        assert(std::string(e.what()) == "Not implemented");
+    }
+
+    std::cout << "List sort tests build successfully but fail as expected." << std::endl;
+}
+
 int main() {
     test_list();
-    test_insert();
-    test_erase();
-    test_reverse();
-    test_iterators();
     return 0;
 }

@@ -16,6 +16,7 @@ void test_copy_assignment();
 void test_reserve();
 void test_shrink_to_fit();
 void test_reverse_iterators();
+void test_vector_sort();
 
 void test_vector() {
     test_initialization();
@@ -32,6 +33,7 @@ void test_vector() {
     test_reserve();
     test_shrink_to_fit();
     test_reverse_iterators();
+    test_vector_sort();
     std::cout << "All tests passed!" << std::endl;
 }
 
@@ -307,6 +309,20 @@ void test_reverse_iterators() {
     assert(single_vec.rend() == single_vec.begin() - 1);
 
     std::cout << "Reverse iterators tests passed!" << std::endl;
+}
+
+void test_vector_sort() {
+    CustomCXX::Vector<int> vec = {3, 1, 2};
+
+    // Expect an exception since sort() is not implemented
+    try {
+        vec.sort();
+        assert(false); // Fail if no exception is thrown
+    } catch (const std::logic_error& e) {
+        assert(std::string(e.what()) == "Not implemented");
+    }
+
+    std::cout << "Vector sort tests build successfully but fail as expected." << std::endl;
 }
 
 int main() {

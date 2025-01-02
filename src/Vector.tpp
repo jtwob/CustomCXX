@@ -191,6 +191,19 @@ template <typename T>
 T* Vector<T>::rend() {
     return _data - 1; // Pointer to one before the first element
 }
+
+template <typename T>
+void Vector<T>::sort() {
+    // TODO: Implement ascending sort
+    throw std::logic_error("Not implemented");
+}
+
+template <typename T>
+template <typename Compare>
+void Vector<T>::sort(Compare comp) {
+    // TODO: Implement custom comparator sort
+    throw std::logic_error("Not implemented");
+}
 // Add more methods...
 
 } // namespace CustomCXX

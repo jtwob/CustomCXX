@@ -244,4 +244,17 @@ typename List<T>::Node* List<T>::rend() {
     return nullptr; // Reverse end iterator points before the first element
 }
 
+template <typename T>
+void List<T>::sort() {
+    // TODO: Implement ascending sort
+    throw std::logic_error("Not implemented");
+}
+
+template <typename T>
+template <typename Compare>
+void List<T>::sort(Compare comp) {
+    // TODO: Implement custom comparator sort
+    throw std::logic_error("Not implemented");
+}
+
 } // namespace CustomCXX
