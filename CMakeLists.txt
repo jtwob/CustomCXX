@@ -32,3 +32,8 @@ target_link_libraries(CustomCXXTests_List PRIVATE CustomCXX)
 # Register List tests
 add_test(NAME CustomCXXTests_List COMMAND CustomCXXTests_List)
 
+# Test Logging
+add_custom_target(generate_log
+    COMMAND ${CMAKE_CTEST_COMMAND} --output-on-failure -C $<CONFIG> > ${CMAKE_BINARY_DIR}/test_output.log
+    COMMENT "Generating test log file..."
+)
