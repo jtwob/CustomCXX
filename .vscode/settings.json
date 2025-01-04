@@ -4,6 +4,9 @@
         "xutility": "cpp",
         "*.tpp": "cpp",
         "ostream": "cpp",
-        "xlocinfo": "cpp"
+        "xlocinfo": "cpp",
+        "iterator": "cpp",
+        "memory": "cpp",
+        "vector": "cpp"
     }
 }
