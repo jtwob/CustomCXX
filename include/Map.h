@@ -4,6 +4,8 @@
 #include <vector>
 #include <list>
 #include <utility> // For std::pair
+#include <cstddef>
+#include <stdexcept>
 
 namespace CustomCXX {
 
