@@ -32,6 +32,15 @@ target_link_libraries(CustomCXXTests_List PRIVATE CustomCXX)
 # Register List tests
 add_test(NAME CustomCXXTests_List COMMAND CustomCXXTests_List)
 
+# Add the Map test executables
+add_executable(CustomCXXTests_Map
+    tests/test_map.cpp
+)
+target_link_libraries(CustomCXXTests_Map PRIVATE CustomCXX)
+
+# Register Vector tests
+add_test(NAME CustomCXXTests_Map COMMAND CustomCXXTests_Map)
+
 # Test Logging
 add_custom_target(generate_log
     COMMAND ${CMAKE_CTEST_COMMAND} --output-on-failure -C $<CONFIG> > ${CMAKE_BINARY_DIR}/test_output.log
