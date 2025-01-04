@@ -9,12 +9,33 @@ namespace CustomCXX {
 
     template <typename Key, typename Value>
     bool Map<Key, Value>::contains(const Key& key) const {
-        throw std::logic_error("contains not implemented");
+        size_t bucket_index = hash(key);
+        const auto& bucket = buckets[bucket_index];
+
+        for (const auto& node : bucket) {
+            if (node.key == key) {
+                return true; // Key found
+            }
+        }
+
+        return false; // Key not found
     }
 
     template <typename Key, typename Value>
     void Map<Key, Value>::erase(const Key& key) {
-        throw std::logic_error("erase not implemented");
+        size_t bucket_index = hash(key);
+        auto& bucket = buckets[bucket_index];
+
+        for (auto it = bucket.begin(); it != bucket.end(); ++it) {
+            if (it->key == key) {
+                bucket.erase(it); // Remove the node from the bucket
+                --size_;          // Decrement size
+                return;           // Exit after erasing
+            }
+        }
+
+        // Key not found
+        throw std::out_of_range("Key not found in Map");
     }
 
     template <typename Key, typename Value>

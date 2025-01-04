@@ -38,7 +38,7 @@ add_executable(CustomCXXTests_Map
 )
 target_link_libraries(CustomCXXTests_Map PRIVATE CustomCXX)
 
-# Register Vector tests
+# Register Map tests
 add_test(NAME CustomCXXTests_Map COMMAND CustomCXXTests_Map)
 
 # Test Logging

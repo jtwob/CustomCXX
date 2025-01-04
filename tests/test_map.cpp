@@ -1,6 +1,7 @@
 #include "Map.h"
 #include <iostream>
 #include <cassert>
+#include <string>
 
 void test_map();
 void test_erase_and_contains();
