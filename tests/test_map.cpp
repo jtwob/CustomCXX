@@ -5,8 +5,10 @@
 void test_map();
 void test_erase_and_contains();
 void test_basic_operations();
+void test_operator_brackets();
 
 void test_map() {
+    test_operator_brackets();
     test_basic_operations();
     test_erase_and_contains();
 }
@@ -47,6 +49,13 @@ void test_erase_and_contains() {
     assert(map.contains(3));
 
     std::cout << "Erase and contains test passed!" << std::endl;
+}
+
+void test_operator_brackets() {
+    CustomCXX::Map<int, std::string> map;
+    map[1] = "one";
+    assert(map[1] == "one");
+    std::cout << "Operator[] test passed!" << std::endl;
 }
 
 int main() {
