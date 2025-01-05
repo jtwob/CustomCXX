@@ -11,6 +11,7 @@ void test_erase_single_key();
 void test_contains_key_not_present();
 void test_rehashing();
 void test_insert_or_assign();
+void test_keys();
 
 void test_map() {
     test_operator_brackets();
@@ -20,6 +21,7 @@ void test_map() {
     test_contains_key_not_present();
     test_rehashing();
     test_insert_or_assign();
+    test_keys();
 }
 
 void test_basic_operations() {
@@ -110,6 +112,22 @@ void test_insert_or_assign() {
     assert(map[1] == "uno");
 
     std::cout << "insert_or_assign test passed!" << std::endl;
+}
+
+void test_keys() {
+    CustomCXX::Map<int, std::string> map;
+
+    map[1] = "one";
+    map[2] = "two";
+    map[3] = "three";
+
+    auto key_list = map.keys();
+    assert(key_list.size() == 3);
+    assert(key_list[0] == 1 || key_list[1] == 1 || key_list[2] == 1);
+    assert(key_list[0] == 2 || key_list[1] == 2 || key_list[2] == 2);
+    assert(key_list[0] == 3 || key_list[1] == 3 || key_list[2] == 3);
+
+    std::cout << "Keys test passed!" << std::endl;
 }
 
 int main() {

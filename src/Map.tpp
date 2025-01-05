@@ -1,4 +1,5 @@
 #include "../include/Map.h"
+#include "../include/Vector.h"
 
 namespace CustomCXX {
 
@@ -106,5 +107,18 @@ namespace CustomCXX {
 
         bucket.push_back({key, value});
         ++size_;
+    }
+
+    template <typename Key, typename Value>
+    CustomCXX::Vector<Key> Map<Key, Value>::keys() const {
+        CustomCXX::Vector<Key> result;
+
+        for (const auto& bucket : buckets) {
+            for (const auto& node : bucket) {
+                result.push_back(node.key);
+            }
+        }
+
+        return result;
     }
 }

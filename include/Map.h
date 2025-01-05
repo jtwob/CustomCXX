@@ -7,6 +7,8 @@
 #include <cstddef>
 #include <stdexcept>
 
+#include "./Vector.h"
+
 namespace CustomCXX {
 
 template <typename Key, typename Value>
@@ -34,7 +36,8 @@ public:
     void erase(const Key& key);          // Remove a key-value pair
     size_t size() const;                 // Return number of elements
     bool empty() const;                  // Check if map is empty
-    
+    CustomCXX::Vector<Key> keys() const;
+
     void rehash(size_t new_bucket_count);// Rehash to a new bucket count
     void insert_or_assign(const Key& key, const Value& value);// Insert or update a key-value pair
 };
