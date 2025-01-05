@@ -9,6 +9,8 @@ void test_basic_operations();
 void test_operator_brackets();
 void test_erase_single_key();
 void test_contains_key_not_present();
+void test_rehashing();
+void test_insert_or_assign();
 
 void test_map() {
     test_operator_brackets();
@@ -16,6 +18,8 @@ void test_map() {
     test_erase_and_contains();
     test_erase_single_key();
     test_contains_key_not_present();
+    test_rehashing();
+    test_insert_or_assign();
 }
 
 void test_basic_operations() {
@@ -84,6 +88,28 @@ void test_contains_key_not_present() {
 
     assert(!map.contains(2)); // Should pass
     std::cout << "Contains key not present test passed!" << std::endl;
+}
+
+void test_rehashing() {
+    CustomCXX::Map<int, std::string> map(4); // Small initial bucket count
+    for (int i = 0; i < 10; ++i) {
+        map[i] = "value" + std::to_string(i);
+    }
+
+    assert(map.size() == 10); // Ensure all elements are present
+    std::cout << "Rehashing test passed!" << std::endl;
+}
+
+void test_insert_or_assign() {
+    CustomCXX::Map<int, std::string> map;
+
+    map.insert_or_assign(1, "one");
+    assert(map.contains(1) && map[1] == "one");
+
+    map.insert_or_assign(1, "uno"); // Update existing key
+    assert(map[1] == "uno");
+
+    std::cout << "insert_or_assign test passed!" << std::endl;
 }
 
 int main() {

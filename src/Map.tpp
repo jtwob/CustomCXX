@@ -72,5 +72,39 @@ namespace CustomCXX {
         return buckets[bucket_index].back().value; // Return reference to the new value
     }
 
+    template <typename Key, typename Value>
+    void Map<Key, Value>::rehash(size_t new_bucket_count) {
+        std::vector<std::list<Node>> new_buckets(new_bucket_count);
 
+        for (const auto& bucket : buckets) {
+            for (const auto& node : bucket) {
+                size_t new_index = std::hash<Key>{}(node.key) % new_bucket_count;
+                new_buckets[new_index].push_back(node);
+            }
+        }
+
+        buckets = std::move(new_buckets);
+        bucket_count = new_bucket_count;
+    }
+
+    template <typename Key, typename Value>
+    void Map<Key, Value>::insert_or_assign(const Key& key, const Value& value) {
+        if (size_ > 0.75 * bucket_count) {
+            rehash(bucket_count * 2);
+        }
+
+        // Insert or overwrite logic
+        size_t index = hash(key);
+        auto& bucket = buckets[index];
+
+        for (auto& node : bucket) {
+            if (node.key == key) {
+                node.value = value; // Overwrite
+                return;
+            }
+        }
+
+        bucket.push_back({key, value});
+        ++size_;
+    }
 }

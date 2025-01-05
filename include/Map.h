@@ -23,6 +23,8 @@ private:
 
     size_t hash(const Key& key) const;    // Hash function
 
+    static constexpr double LOAD_FACTOR_THRESHOLD = 0.75; // Load factor threshold for rehashing
+
 public:
     Map(size_t bucket_count = 16);        // Constructor with bucket count
     ~Map() = default;
@@ -32,6 +34,9 @@ public:
     void erase(const Key& key);          // Remove a key-value pair
     size_t size() const;                 // Return number of elements
     bool empty() const;                  // Check if map is empty
+    
+    void rehash(size_t new_bucket_count);// Rehash to a new bucket count
+    void insert_or_assign(const Key& key, const Value& value);// Insert or update a key-value pair
 };
 
 } // namespace CustomCXX
