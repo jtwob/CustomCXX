@@ -1,4 +1,5 @@
 # CustomCXX
+<img src="https://img.shields.io/badge/LICENSE-mit-green"/>
 A lightweight C++ library implementing core data structures (`Vector`, `List`, and `Map`) with robust features, sorting algorithms, and comprehensive test coverage.
 
 ## Features
