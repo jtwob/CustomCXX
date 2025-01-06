@@ -85,4 +85,4 @@ Build and run the tests:
 **James Totah**  
 Aspiring software developer with a passion for crossdisciplinary projects. This project showcases robust implementations of core data structures (`Vector`, `List`, and `Map`) as part of my journey to mastering modern C++. I aim to create tools and libraries that are educational, efficient, and reusable.
 
-Feel free to connect with me on [GitHub](https://github.com/jtwob) or [LinkedIn](https://www.linkedin.com/in/james-totah-337714188/) (add your LinkedIn link if applicable) to discuss ideas or collaborate on future projects!
+Feel free to connect with me on [GitHub](https://github.com/jtwob) or [LinkedIn](https://www.linkedin.com/in/james-totah-337714188/) to discuss ideas or collaborate on future projects!
