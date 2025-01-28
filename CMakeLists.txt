@@ -8,6 +8,10 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 # Add include directories
 include_directories(include)
 
+# Google Test
+enable_testing()
+add_subdirectory(external/googletest)
+
 # Add the header-only library
 add_library(CustomCXX INTERFACE)
 target_include_directories(CustomCXX INTERFACE include)
@@ -19,7 +23,7 @@ enable_testing()
 add_executable(CustomCXXTests_Vector
     tests/test_vector.cpp
 )
-target_link_libraries(CustomCXXTests_Vector PRIVATE CustomCXX)
+target_link_libraries(CustomCXXTests_Vector PRIVATE CustomCXX gtest_main)
 
 # Register Vector tests
 add_test(NAME CustomCXXTests_Vector COMMAND CustomCXXTests_Vector)
@@ -27,7 +31,7 @@ add_test(NAME CustomCXXTests_Vector COMMAND CustomCXXTests_Vector)
 add_executable(CustomCXXTests_List
     tests/test_list.cpp
 )
-target_link_libraries(CustomCXXTests_List PRIVATE CustomCXX)
+target_link_libraries(CustomCXXTests_List PRIVATE CustomCXX gtest_main)
 
 # Register List tests
 add_test(NAME CustomCXXTests_List COMMAND CustomCXXTests_List)
@@ -36,7 +40,7 @@ add_test(NAME CustomCXXTests_List COMMAND CustomCXXTests_List)
 add_executable(CustomCXXTests_Map
     tests/test_map.cpp
 )
-target_link_libraries(CustomCXXTests_Map PRIVATE CustomCXX)
+target_link_libraries(CustomCXXTests_Map PRIVATE CustomCXX gtest_main)
 
 # Register Map tests
 add_test(NAME CustomCXXTests_Map COMMAND CustomCXXTests_Map)

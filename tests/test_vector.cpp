@@ -1,8 +1,9 @@
 #include "Vector.h"
+#include <gtest/gtest.h>
 #include <iostream>
 #include <cassert>
 
-void test_initialization();
+// void test_initialization();
 void test_push_back();
 void test_pop_back();
 void test_subscript_operator();
@@ -19,7 +20,7 @@ void test_reverse_iterators();
 void test_vector_sort();
 
 void test_vector() {
-    test_initialization();
+    // test_initialization();
     test_push_back();
     test_pop_back();
     test_subscript_operator();
@@ -37,11 +38,17 @@ void test_vector() {
     std::cout << "All tests passed!" << std::endl;
 }
 
-void test_initialization() {
+// void test_initialization() {
+//     CustomCXX::Vector<int> vec;
+//     assert(vec.size() == 0);
+//     assert(vec.capacity() == 0);
+//     std::cout << "Initialization tests passed!" << std::endl;
+// }
+
+TEST(VectorTest, Initialization) {
     CustomCXX::Vector<int> vec;
-    assert(vec.size() == 0);
-    assert(vec.capacity() == 0);
-    std::cout << "Initialization tests passed!" << std::endl;
+    EXPECT_EQ(vec.size(), 0);
+    EXPECT_EQ(vec.capacity(), 0);
 }
 
 void test_push_back() {
@@ -346,8 +353,13 @@ void test_vector_sort() {
     std::cout << "Vector sort tests passed!" << std::endl;
 }
 
-
-int main() {
-    test_vector();
-    return 0;
+// Run all tests
+int main(int argc, char **argv) {
+    ::testing::InitGoogleTest(&argc, argv);
+    return RUN_ALL_TESTS();
 }
+
+// int main() {
+//     test_vector();
+//     return 0;
+// }

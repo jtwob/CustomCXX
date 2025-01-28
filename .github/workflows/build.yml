@@ -3,14 +3,11 @@ name: Build and Test
 on:
   push:
     branches:
-      - main
-      - feature/*
-      - structures/*
+      - gtest
   pull_request:
     branches:
-      - main
-      - feature/*
-      - structures/*
+      - gtest
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -18,7 +15,6 @@ jobs:
     steps:
     - name: Checkout Code
       uses: actions/checkout@v3
-      
 
     - name: Install Dependencies
       run: |
@@ -33,9 +29,10 @@ jobs:
       run: |
         cmake --build build
 
-    - name: Run Tests
+    - name: Run Tests with CTest
       run: |
-        ctest --test-dir build -C Debug --output-on-failure > build/test_output.log
+        cd build
+        ctest --output-on-failure > test_output.log
 
     - name: Upload Test Log
       uses: actions/upload-artifact@v4
