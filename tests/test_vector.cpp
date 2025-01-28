@@ -3,8 +3,6 @@
 #include <iostream>
 #include <cassert>
 
-// void test_initialization();
-void test_push_back();
 void test_pop_back();
 void test_subscript_operator();
 void test_iterators();
@@ -20,8 +18,6 @@ void test_reverse_iterators();
 void test_vector_sort();
 
 void test_vector() {
-    // test_initialization();
-    test_push_back();
     test_pop_back();
     test_subscript_operator();
     test_iterators();
@@ -38,39 +34,30 @@ void test_vector() {
     std::cout << "All tests passed!" << std::endl;
 }
 
-// void test_initialization() {
-//     CustomCXX::Vector<int> vec;
-//     assert(vec.size() == 0);
-//     assert(vec.capacity() == 0);
-//     std::cout << "Initialization tests passed!" << std::endl;
-// }
-
 TEST(VectorTest, Initialization) {
     CustomCXX::Vector<int> vec;
     EXPECT_EQ(vec.size(), 0);
     EXPECT_EQ(vec.capacity(), 0);
 }
 
-void test_push_back() {
+TEST(VectorTest, PushBack) {
     CustomCXX::Vector<int> vec;
 
     vec.push_back(1);
-    assert(vec.size() == 1);
+    EXPECT_EQ(vec.size(), 1);
 
     size_t initial_capacity = vec.capacity();
     vec.push_back(2);
 
     // Handle edge case where initial capacity is 0
     if (initial_capacity == 0) {
-        assert(vec.capacity() == 1); // First resize sets capacity to 1
+        EXPECT_EQ(vec.capacity(), 1); // First resize sets capacity to 1
     } else {
-        assert(vec.capacity() > initial_capacity);
+        EXPECT_GT(vec.capacity(), initial_capacity);
     }
 
-    assert(vec[0] == 1);
-    assert(vec[1] == 2);
-
-    std::cout << "Push_back tests passed!" << std::endl;
+    EXPECT_EQ(vec[0], 1);
+    EXPECT_EQ(vec[1], 2);
 }
 
 void test_pop_back() {
