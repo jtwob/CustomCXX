@@ -10,7 +10,14 @@ include_directories(include)
 
 # Google Test
 enable_testing()
-add_subdirectory(external/googletest)
+
+# GoogleTest: Fetch the library automatically
+include(FetchContent)
+FetchContent_Declare(
+  googletest
+  URL https://github.com/google/googletest/archive/refs/heads/main.zip
+)
+FetchContent_MakeAvailable(googletest)
 
 # Add the header-only library
 add_library(CustomCXX INTERFACE)
