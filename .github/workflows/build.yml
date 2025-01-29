@@ -16,34 +16,38 @@ jobs:
     - name: Checkout Code
       uses: actions/checkout@v3
 
-    - name: Cache CMake Build
+    # Cache system dependencies
+    - name: Cache APT Packages
       uses: actions/cache@v3
       with:
-        path: build
-        key: cmake-build-${{ runner.os }}-${{ github.ref }}
+        path: /var/cache/apt
+        key: ubuntu-packages-${{ runner.os }}-${{ hashFiles('CMakeLists.txt') }}
         restore-keys: |
-          cmake-build-${{ runner.os }}-
-
-    - name: Cache GoogleTest
-      uses: actions/cache@v3
-      with:
-        path: ~/.cache/googletest
-        key: gtest-${{ runner.os }}
-        restore-keys: |
-          gtest-
+          ubuntu-packages-${{ runner.os }}-
 
     - name: Install Dependencies (Only If Cache Misses)
       run: |
-        sudo apt-get update
-        sudo apt-get install -y cmake g++ make ccache
+        if [ ! -f "/usr/bin/cmake" ]; then
+          sudo apt-get update
+          sudo apt-get install -y cmake g++ make ccache
+        else
+          echo "Dependencies already installed, skipping..."
+        fi
 
-    - name: Configure CMake with CCache
-      run: |
-        cmake -S . -B build -DCMAKE_CXX_COMPILER_LAUNCHER=ccache
+    # Cache GoogleTest
+    - name: Cache GoogleTest Build
+      uses: actions/cache@v3
+      with:
+        path: build/_deps/googletest-src
+        key: gtest-${{ runner.os }}-${{ hashFiles('CMakeLists.txt') }}
+        restore-keys: |
+          gtest-${{ runner.os }}-
 
-    - name: Build Project (Parallel Build)
-      run: |
-        cmake --build build --parallel $(nproc)
+    - name: Configure Project with CMake
+      run: cmake -S . -B build
+
+    - name: Build Project
+      run: cmake --build build
 
     - name: Run Tests with CTest (Capture Output)
       id: ctest_run
@@ -53,7 +57,7 @@ jobs:
         test ${PIPESTATUS[0]} -eq 0  # Fail the workflow if tests fail
 
     - name: Upload Test Log
-      if: always()  # Ensure artifact uploads even if previous step fails
+      if: always()
       uses: actions/upload-artifact@v4
       with:
         name: test-log
