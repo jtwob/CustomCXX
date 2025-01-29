@@ -16,42 +16,34 @@ jobs:
     - name: Checkout Code
       uses: actions/checkout@v3
 
-    # Cache CMake Build, GoogleTest, and ccache
     - name: Cache CMake Build
       uses: actions/cache@v3
       with:
         path: build
         key: cmake-build-${{ runner.os }}-${{ github.ref }}
-        restore-keys: cmake-build-${{ runner.os }}-
+        restore-keys: |
+          cmake-build-${{ runner.os }}-
 
     - name: Cache GoogleTest
       uses: actions/cache@v3
       with:
-        path: build/_deps/googletest-src
-        key: gtest-${{ runner.os }}-${{ hashFiles('CMakeLists.txt') }}
-        restore-keys: gtest-${{ runner.os }}-
-
-    - name: Cache ccache
-      uses: actions/cache@v3
-      with:
-        path: ~/.ccache
-        key: ccache-${{ runner.os }}-${{ github.sha }}
-        restore-keys: ccache-${{ runner.os }}-
+        path: ~/.cache/googletest
+        key: gtest-${{ runner.os }}
+        restore-keys: |
+          gtest-
 
     - name: Install Dependencies (Only If Cache Misses)
       run: |
         sudo apt-get update
         sudo apt-get install -y cmake g++ make ccache
 
-    - name: Configure and Build Project (Use ccache)
+    - name: Configure CMake with CCache
       run: |
-        cmake -S . -B build \
-          -DCMAKE_C_COMPILER_LAUNCHER=ccache \
-          -DCMAKE_CXX_COMPILER_LAUNCHER=ccache
-        cmake --build build --parallel $(nproc)
+        cmake -S . -B build -DCMAKE_CXX_COMPILER_LAUNCHER=ccache
 
-    - name: Show ccache stats
-      run: ccache -s
+    - name: Build Project (Parallel Build)
+      run: |
+        cmake --build build --parallel $(nproc)
 
     - name: Run Tests with CTest (Capture Output)
       id: ctest_run
@@ -61,7 +53,7 @@ jobs:
         test ${PIPESTATUS[0]} -eq 0  # Fail the workflow if tests fail
 
     - name: Upload Test Log
-      if: always()
+      if: always()  # Ensure artifact uploads even if previous step fails
       uses: actions/upload-artifact@v4
       with:
         name: test-log

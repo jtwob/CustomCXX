@@ -8,42 +8,51 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 # Add include directories
 include_directories(include)
 
-# Enable testing framework
+# Google Test
 enable_testing()
 
-# 🔹 GoogleTest: Fetch and build the library
+# GoogleTest: Fetch the library automatically
 include(FetchContent)
 FetchContent_Declare(
-    googletest
-    URL https://github.com/google/googletest/archive/refs/tags/v1.14.0.zip
+  googletest
+  URL https://github.com/google/googletest/archive/refs/heads/main.zip
 )
 FetchContent_MakeAvailable(googletest)
 
-# Ensure GoogleTest is included
-include_directories(${gtest_SOURCE_DIR}/include)
-
-# Create a header-only library for CustomCXX
+# Add the header-only library
 add_library(CustomCXX INTERFACE)
 target_include_directories(CustomCXX INTERFACE include)
 
-# 🔹 Common function to add test executables
-function(add_customcxx_test test_name source_file)
-    add_executable(${test_name} ${source_file})
-    target_link_libraries(${test_name} PRIVATE CustomCXX gtest gtest_main)
-    gtest_discover_tests(${test_name})  # Auto-discover tests
-    add_test(NAME ${test_name} COMMAND ${test_name}) # Register the test
-endfunction()
+# Enable tests
+enable_testing()
 
-# 🔹 Add Vector Tests
-add_customcxx_test(CustomCXXTests_Vector tests/test_vector.cpp)
+# Add the test executables
+add_executable(CustomCXXTests_Vector
+    tests/test_vector.cpp
+)
+target_link_libraries(CustomCXXTests_Vector PRIVATE CustomCXX gtest_main)
 
-# 🔹 Add List Tests
-add_customcxx_test(CustomCXXTests_List tests/test_list.cpp)
+# Register Vector tests
+add_test(NAME CustomCXXTests_Vector COMMAND CustomCXXTests_Vector)
 
-# 🔹 Add Map Tests
-add_customcxx_test(CustomCXXTests_Map tests/test_map.cpp)
+add_executable(CustomCXXTests_List
+    tests/test_list.cpp
+)
+target_link_libraries(CustomCXXTests_List PRIVATE CustomCXX gtest_main)
 
-# 🔹 Test Logging
+# Register List tests
+add_test(NAME CustomCXXTests_List COMMAND CustomCXXTests_List)
+
+# Add the Map test executables
+add_executable(CustomCXXTests_Map
+    tests/test_map.cpp
+)
+target_link_libraries(CustomCXXTests_Map PRIVATE CustomCXX gtest_main)
+
+# Register Map tests
+add_test(NAME CustomCXXTests_Map COMMAND CustomCXXTests_Map)
+
+# Test Logging
 add_custom_target(generate_log
     COMMAND ${CMAKE_CTEST_COMMAND} --output-on-failure -C $<CONFIG> > ${CMAKE_BINARY_DIR}/test_output.log
     COMMENT "Generating test log file..."
