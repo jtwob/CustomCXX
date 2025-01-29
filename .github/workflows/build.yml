@@ -20,10 +20,10 @@ jobs:
     - name: Cache APT Packages
       uses: actions/cache@v3
       with:
-        path: /var/cache/apt
-        key: ubuntu-packages-${{ runner.os }}-${{ hashFiles('CMakeLists.txt') }}
+        path: /var/cache/apt/archives/*.deb
+        key: apt-cache-${{ runner.os }}
         restore-keys: |
-          ubuntu-packages-${{ runner.os }}-
+          apt-cache-
 
     - name: Install Dependencies (Only If Cache Misses)
       run: |
