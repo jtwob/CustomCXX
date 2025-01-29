@@ -119,6 +119,9 @@ TEST(VectorTest, TestClear) {
     }
 }
 
+TEST(VectorTest, TestInsert) {
+    
+}
 
 void test_insert() {
     CustomCXX::Vector<int> vec = {1, 2, 4, 5};
