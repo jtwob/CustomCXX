@@ -3,7 +3,6 @@
 #include <iostream>
 #include <cassert>
 
-void test_insert();
 void test_erase();
 void test_move_semantics();
 void test_copy_constructor();
@@ -14,7 +13,6 @@ void test_reverse_iterators();
 void test_vector_sort();
 
 void test_vector() {
-    test_insert();
     test_erase();
     test_move_semantics();
     test_copy_constructor();
@@ -120,36 +118,30 @@ TEST(VectorTest, TestClear) {
 }
 
 TEST(VectorTest, TestInsert) {
-    
-}
-
-void test_insert() {
     CustomCXX::Vector<int> vec = {1, 2, 4, 5};
 
     // Insert in the middle
     vec.insert(2, 3);
-    assert(vec[2] == 3);
-    assert(vec[3] == 4);
-    assert(vec.size() == 5);
+    EXPECT_EQ(vec[2], 3);
+    EXPECT_EQ(vec[3], 4);
+    EXPECT_EQ(vec.size(), 5);
 
     // Insert at the beginning
     vec.insert(0, 0);
-    assert(vec[0] == 0);
-    assert(vec.size() == 6);
+    EXPECT_EQ(vec[0], 0);
+    EXPECT_EQ(vec.size(), 6);
 
     // Insert at the end
     vec.insert(vec.size(), 6);
-    assert(vec[vec.size() - 1] == 6);
+    EXPECT_EQ(vec[vec.size() - 1], 6);
 
     // Handle invalid indices
     try {
         vec.insert(10, 99);
-        assert(false); // Should not reach here
+        EXPECT_TRUE(false); // Should not reach here
     } catch (const std::out_of_range& e) {
-        assert(std::string(e.what()) == "Index out of range");
+        EXPECT_EQ(std::string(e.what()), "Index out of range");
     }
-
-    std::cout << "Insert tests passed!" << std::endl;
 }
 
 void test_erase() {
