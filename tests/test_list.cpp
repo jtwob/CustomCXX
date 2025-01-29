@@ -1,8 +1,8 @@
 #include "List.h"
+#include <gtest/gtest.h>
 #include <iostream>
 #include <cassert>
 
-void test_basic_list();
 void test_insert();
 void test_erase();
 void test_reverse();
@@ -10,7 +10,6 @@ void test_iterators();
 void test_list_sort();
 
 void test_list() {
-    test_basic_list();
     test_insert();
     test_erase();
     test_reverse();
@@ -18,31 +17,29 @@ void test_list() {
     test_list_sort();
 }
 
-void test_basic_list() {
+TEST(ListTest, TestBasicList) {
     CustomCXX::List<int> list;
 
     // Test push_front and push_back
     list.push_front(1);
     list.push_back(2);
     list.push_back(3);
-    assert(list.size() == 3);
-    assert(list.front() == 1);
-    assert(list.back() == 3);
+    EXPECT_EQ(list.size(), 3);
+    EXPECT_EQ(list.front(), 1);
+    EXPECT_EQ(list.back(), 3);
 
     // Test pop_front and pop_back
     list.pop_front();
-    assert(list.size() == 2);
-    assert(list.front() == 2);
+    EXPECT_EQ(list.size(), 2);
+    EXPECT_EQ(list.front(), 2);
 
     list.pop_back();
-    assert(list.size() == 1);
-    assert(list.back() == 2);
+    EXPECT_EQ(list.size(), 1);
+    EXPECT_EQ(list.back(), 2);
 
     // Test clear
     list.clear();
-    assert(list.empty());
-
-    std::cout << "Basic List tests passed!" << std::endl;
+    EXPECT_TRUE(list.empty());
 }
 
 void test_insert() {
@@ -192,8 +189,8 @@ void test_list_sort() {
     std::cout << "List sort tests passed!" << std::endl;
 }
 
-
-int main() {
-    test_list();
-    return 0;
+// Run all tests
+int main(int argc, char **argv) {
+    ::testing::InitGoogleTest(&argc, argv);
+    return RUN_ALL_TESTS();
 }
