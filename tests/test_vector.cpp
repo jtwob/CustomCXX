@@ -3,14 +3,12 @@
 #include <iostream>
 #include <cassert>
 
-void test_copy_assignment();
 void test_reserve();
 void test_shrink_to_fit();
 void test_reverse_iterators();
 void test_vector_sort();
 
 void test_vector() {
-    test_copy_assignment();
     test_reserve();
     test_shrink_to_fit();
     test_reverse_iterators();
@@ -198,28 +196,27 @@ TEST(VectorTest, TestCopyConstructor) {
     EXPECT_NE(copy[0], vec[0]);
 }
 
-void test_copy_assignment(){
+TEST(VectorTest, TestCopyAssignment) {
     CustomCXX::Vector<int> vec = {1, 2, 3};
     CustomCXX::Vector<int> copy;
     copy = vec;
 
     // Ensure copy has the same elements
-    assert(copy.size() == vec.size());
+    EXPECT_EQ(copy.size(), vec.size());
     for(size_t i = 0; i < vec.size(); ++i){
-        assert(copy[i] == vec[i]);
+        EXPECT_EQ(copy[i], vec[i]);
     }
 
     // Ensure deep copy
     copy[1] = 20;
-    assert(copy[1] != vec[1]);
+    EXPECT_NE(copy[1], vec[1]);
 
     // Test self-assignment
     copy = copy;
-    assert(copy.size() == 3);
-    assert(copy[0] == 1);
-
-    std::cout << "Copy assignment tests passed!" << std::endl;
+    EXPECT_EQ(copy.size(), 3);
+    EXPECT_EQ(copy[0], 1);
 }
+
 
 void test_reserve(){
     CustomCXX::Vector<int> vec;
