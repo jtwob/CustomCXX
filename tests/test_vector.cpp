@@ -3,7 +3,6 @@
 #include <iostream>
 #include <cassert>
 
-void test_copy_constructor();
 void test_copy_assignment();
 void test_reserve();
 void test_shrink_to_fit();
@@ -11,7 +10,6 @@ void test_reverse_iterators();
 void test_vector_sort();
 
 void test_vector() {
-    test_copy_constructor();
     test_copy_assignment();
     test_reserve();
     test_shrink_to_fit();
@@ -185,21 +183,19 @@ TEST(VectorTest, TestMoveSemantics) {
     }
 }
 
-void test_copy_constructor(){
+TEST(VectorTest, TestCopyConstructor) {
     CustomCXX::Vector<int> vec = {1, 2, 3};
     CustomCXX::Vector<int> copy(vec);
 
     // Ensure copy has the same elements;
-    assert(copy.size() == vec.size());
+    EXPECT_EQ(copy.size(), vec.size());
     for(size_t i = 0; i < vec.size(); ++i){
-        assert(copy[i] == vec[i]);
+        EXPECT_EQ(copy[i], vec[i]);
     }
 
     // Ensure deep copy
     copy[0] = 10;
-    assert(copy[0] != vec[0]);
-
-    std::cout << "Copy constructor tests passed!" << std::endl;
+    EXPECT_NE(copy[0], vec[0]);
 }
 
 void test_copy_assignment(){
