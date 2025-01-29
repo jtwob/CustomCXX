@@ -3,7 +3,6 @@
 #include <iostream>
 #include <cassert>
 
-void test_move_semantics();
 void test_copy_constructor();
 void test_copy_assignment();
 void test_reserve();
@@ -12,7 +11,6 @@ void test_reverse_iterators();
 void test_vector_sort();
 
 void test_vector() {
-    test_move_semantics();
     test_copy_constructor();
     test_copy_assignment();
     test_reserve();
@@ -169,24 +167,22 @@ TEST(VectorTest, TestErase) {
 
 }
 
-void test_move_semantics() {
+TEST(VectorTest, TestMoveSemantics) {
     CustomCXX::Vector<int> vec1 = {1, 2, 3};
     CustomCXX::Vector<int> vec2 = std::move(vec1);
 
     // Ensure vec2 has taken ownership of vec1's data
-    assert(vec2.size() == 3);
-    assert(vec2[0] == 1);
+    EXPECT_EQ(vec2.size(), 3);
+    EXPECT_EQ(vec2[0], 1);
 
     // Ensure vec1 is empty
-    assert(vec1.size() == 0);
+    EXPECT_EQ(vec1.size(), 0);
     try {
         int x = vec1[0];
-        assert(false); // Should not reach here
+        EXPECT_TRUE(false); // Should not reach here
     } catch (const std::out_of_range& e) {
-        assert(std::string(e.what()) == "Index out of range");
+        EXPECT_EQ(std::string(e.what()), "Index out of range");
     }
-
-    std::cout << "Move semantics tests passed!" << std::endl;
 }
 
 void test_copy_constructor(){
