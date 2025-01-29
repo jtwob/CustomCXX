@@ -3,12 +3,10 @@
 #include <iostream>
 #include <cassert>
 
-void test_shrink_to_fit();
 void test_reverse_iterators();
 void test_vector_sort();
 
 void test_vector() {
-    test_shrink_to_fit();
     test_reverse_iterators();
     test_vector_sort();
     std::cout << "All tests passed!" << std::endl;
@@ -227,20 +225,18 @@ TEST(VectorTest, TestReserve){
     EXPECT_EQ(vec.capacity(), old_capacity);
 }
 
-void test_shrink_to_fit(){
+TEST(VectorTest, TestShrinkToFit) {
     CustomCXX::Vector<int> vec = {1, 2, 3};
     vec.reserve(10);
     size_t old_capacity = vec.capacity();
     vec.shrink_to_fit();
-    assert(vec.capacity() == vec.size());
-    assert(vec.capacity() < old_capacity);
+    EXPECT_EQ(vec.capacity(), vec.size());
+    EXPECT_LT(vec.capacity(),old_capacity);
 
     // Ensure no data loss
     for(size_t i = 0; i < vec.size(); ++i){
-        assert(vec[i] == i + 1);
+        EXPECT_EQ(vec[i], i + 1);
     }
-
-    std::cout << "Shrink to fit tests passed!" << std::endl;
 }
 
 void test_reverse_iterators() {
