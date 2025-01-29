@@ -16,50 +16,39 @@ jobs:
     - name: Checkout Code
       uses: actions/checkout@v3
 
-    # Cache APT packages
-    - name: Cache APT packages
+    # Cache CMake Build, GoogleTest, and ccache
+    - name: Cache CMake Build
       uses: actions/cache@v3
       with:
-        path: |
-          /var/cache/apt/archives
-        key: apt-cache-${{ runner.os }}-${{ hashFiles('.github/workflows/build.yml') }}
-        restore-keys: apt-cache-${{ runner.os }}-
+        path: build
+        key: cmake-build-${{ runner.os }}-${{ github.ref }}
+        restore-keys: cmake-build-${{ runner.os }}-
 
-    - name: Install Dependencies (Only If Cache Misses)
-      run: |
-        if [ ! -f "/usr/bin/cmake" ]; then
-          sudo apt-get update
-          sudo apt-get install -y cmake g++ make ccache
-        else
-          echo "Dependencies already installed, skipping..."
-        fi
-
-    # Cache GoogleTest
-    - name: Cache GoogleTest Build
+    - name: Cache GoogleTest
       uses: actions/cache@v3
       with:
         path: build/_deps/googletest-src
         key: gtest-${{ runner.os }}-${{ hashFiles('CMakeLists.txt') }}
-        restore-keys: |
-          gtest-${{ runner.os }}-
+        restore-keys: gtest-${{ runner.os }}-
 
-    # Cache ccache (compiler cache)
     - name: Cache ccache
       uses: actions/cache@v3
       with:
         path: ~/.ccache
         key: ccache-${{ runner.os }}-${{ github.sha }}
-        restore-keys: |
-          ccache-${{ runner.os }}-
+        restore-keys: ccache-${{ runner.os }}-
 
-    - name: Configure CMake with ccache
+    - name: Install Dependencies (Only If Cache Misses)
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y cmake g++ make ccache
+
+    - name: Configure and Build Project (Use ccache)
       run: |
         cmake -S . -B build \
           -DCMAKE_C_COMPILER_LAUNCHER=ccache \
           -DCMAKE_CXX_COMPILER_LAUNCHER=ccache
-
-    - name: Build Project with ccache
-      run: cmake --build build
+        cmake --build build --parallel $(nproc)
 
     - name: Show ccache stats
       run: ccache -s
