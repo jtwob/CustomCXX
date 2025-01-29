@@ -59,7 +59,19 @@ TEST(VectorTest, PushBack) {
 }
 
 TEST(VectorTest, PopBack) {
-    EXPECT_TRUE(true);
+    CustomCXX::Vector<int> vec;
+    vec.push_back(1);
+    vec.push_back(2);
+    vec.push_back(3);
+
+    vec.pop_back();
+    EXPECT_EQ(vec.size(), 2);
+    EXPECT_EQ(vec[1], 2);
+
+    vec.pop_back();
+    vec.pop_back();
+    EXPECT_EQ(vec.size(), 0);
+    
 }
 
 // void test_pop_back() {
