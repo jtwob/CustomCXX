@@ -3,7 +3,6 @@
 #include <iostream>
 #include <cassert>
 
-void test_clear();
 void test_insert();
 void test_erase();
 void test_move_semantics();
@@ -15,7 +14,6 @@ void test_reverse_iterators();
 void test_vector_sort();
 
 void test_vector() {
-    test_clear();
     test_insert();
     test_erase();
     test_move_semantics();
@@ -106,22 +104,21 @@ TEST(VectorTest, TestIterators) {
     EXPECT_EQ(sum, 6);
 }
 
-void test_clear() {
+TEST(VectorTest, TestClear) {
     CustomCXX::Vector<int> vec = {1, 2, 3, 4, 5};
     vec.clear();
-    assert(vec.size() == 0);
-    assert(vec.capacity() > 0); // Capacity should remain unchanged
+    EXPECT_EQ(vec.size(), 0);
+    EXPECT_GT(vec.capacity(), 0); // Capacity should remain unchanged
 
     // Ensure accessing elements throws an error
     try {
         int x = vec[0];
-        assert(false); // Should not reach here
+        EXPECT_TRUE(false); // Should not reach here
     } catch (const std::out_of_range& e) {
-        assert(std::string(e.what()) == "Index out of range");
+        EXPECT_EQ(std::string(e.what()),"Index out of range");
     }
-
-    std::cout << "Clear tests passed!" << std::endl;
 }
+
 
 void test_insert() {
     CustomCXX::Vector<int> vec = {1, 2, 4, 5};
