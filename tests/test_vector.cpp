@@ -3,7 +3,6 @@
 #include <iostream>
 #include <cassert>
 
-void test_iterators();
 void test_clear();
 void test_insert();
 void test_erase();
@@ -16,7 +15,6 @@ void test_reverse_iterators();
 void test_vector_sort();
 
 void test_vector() {
-    test_iterators();
     test_clear();
     test_insert();
     test_erase();
@@ -97,13 +95,7 @@ TEST(VectorTest, TestSubscriptOperator) {
     }
 }
 
-// void test_subscript_operator() {
-
-
-//     std::cout << "Subscript operator tests passed!" << std::endl;
-// }
-
-void test_iterators() {
+TEST(VectorTest, TestIterators) {
     CustomCXX::Vector<int> vec = {1, 2, 3};
     int sum = 0;
 
@@ -111,9 +103,7 @@ void test_iterators() {
         sum += *it;
     }
 
-    assert(sum == 6);
-
-    std::cout << "Iterator tests passed!" << std::endl;
+    EXPECT_EQ(sum, 6);
 }
 
 void test_clear() {
