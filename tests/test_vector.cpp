@@ -75,7 +75,7 @@ TEST(VectorTest, PopBack) {
         vec.pop_back();
         EXPECT_TRUE(false); // Should not reach here
     } catch (const std::underflow_error& e) {
-        EXPECT_EQ(std::string(e.what()), "Vector is empty");
+        EXPECT_EQ(std::string(e.what()), "Vector is empty!");
     }
 }
 
