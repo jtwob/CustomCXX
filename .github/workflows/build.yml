@@ -16,13 +16,14 @@ jobs:
     - name: Checkout Code
       uses: actions/checkout@v3
 
-    # Cache system dependencies
+    # Cache APT packages
     - name: Cache APT packages
       uses: actions/cache@v3
       with:
-        path: /var/lib/apt/lists
-        key: apt-cache-${{ runner.os }}
-        restore-keys: apt-cache-
+        path: |
+          /var/cache/apt/archives
+        key: apt-cache-${{ runner.os }}-${{ hashFiles('.github/workflows/build.yml') }}
+        restore-keys: apt-cache-${{ runner.os }}-
 
     - name: Install Dependencies (Only If Cache Misses)
       run: |
@@ -42,11 +43,26 @@ jobs:
         restore-keys: |
           gtest-${{ runner.os }}-
 
-    - name: Configure Project with CMake
-      run: cmake -S . -B build
+    # Cache ccache (compiler cache)
+    - name: Cache ccache
+      uses: actions/cache@v3
+      with:
+        path: ~/.ccache
+        key: ccache-${{ runner.os }}-${{ github.sha }}
+        restore-keys: |
+          ccache-${{ runner.os }}-
 
-    - name: Build Project
+    - name: Configure CMake with ccache
+      run: |
+        cmake -S . -B build \
+          -DCMAKE_C_COMPILER_LAUNCHER=ccache \
+          -DCMAKE_CXX_COMPILER_LAUNCHER=ccache
+
+    - name: Build Project with ccache
       run: cmake --build build
+
+    - name: Show ccache stats
+      run: ccache -s
 
     - name: Run Tests with CTest (Capture Output)
       id: ctest_run
