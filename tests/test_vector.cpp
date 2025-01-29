@@ -1,16 +1,6 @@
 #include "Vector.h"
 #include <gtest/gtest.h>
 #include <iostream>
-#include <cassert>
-
-void test_reverse_iterators();
-void test_vector_sort();
-
-void test_vector() {
-    test_reverse_iterators();
-    test_vector_sort();
-    std::cout << "All tests passed!" << std::endl;
-}
 
 TEST(VectorTest, Initialization) {
     CustomCXX::Vector<int> vec;
@@ -239,61 +229,57 @@ TEST(VectorTest, TestShrinkToFit) {
     }
 }
 
-void test_reverse_iterators() {
+TEST(VectorTest, TestReverseIterator) {
     // Normal case
     CustomCXX::Vector<int> vec = {1, 2, 3};
 
     int expected = 3;
     for (auto it = vec.rbegin(); it != vec.rend(); --it) {
-        assert(*it == expected--);
+        EXPECT_EQ(*it, expected--);
     }
 
     // Empty vector case
     CustomCXX::Vector<int> empty_vec;
-    assert(empty_vec.rbegin() == empty_vec.end()); // Both should be _data
+    EXPECT_EQ(empty_vec.rbegin(), empty_vec.end()); // Both should be _data
 
     // Single element case
     CustomCXX::Vector<int> single_vec = {42};
-    assert(*single_vec.rbegin() == 42);
-    assert(single_vec.rbegin() == single_vec.begin());
-    assert(single_vec.rend() == single_vec.begin() - 1);
-
-    std::cout << "Reverse iterators tests passed!" << std::endl;
+    EXPECT_EQ(*single_vec.rbegin(), 42);
+    EXPECT_EQ(single_vec.rbegin(), single_vec.begin());
+    EXPECT_EQ(single_vec.rend(), single_vec.begin() - 1);
 }
 
-void test_vector_sort() {
+TEST(VectorTest, TestVectorSort) {
     using Vector = CustomCXX::Vector<int>;
 
     // Basic Case
     Vector vec = {3, 1, 4, 1, 5, 9};
     vec.sort();
-    assert(vec == Vector({1, 1, 3, 4, 5, 9}));
+    EXPECT_EQ(vec, Vector({1, 1, 3, 4, 5, 9}));
 
     // Already Sorted
     Vector sorted_vec = {1, 2, 3, 4, 5};
     sorted_vec.sort();
-    assert(sorted_vec == Vector({1, 2, 3, 4, 5}));
+    EXPECT_EQ(sorted_vec, Vector({1, 2, 3, 4, 5}));
 
     // Reverse Sorted
     Vector reverse_vec = {5, 4, 3, 2, 1};
     reverse_vec.sort();
-    assert(reverse_vec == Vector({1, 2, 3, 4, 5}));
+    EXPECT_EQ(reverse_vec, Vector({1, 2, 3, 4, 5}));
 
     // Empty Vector
     Vector empty_vec;
     empty_vec.sort();
-    assert(empty_vec.size() == 0);
+    EXPECT_EQ(empty_vec.size(), 0);
 
     // Single Element
     Vector single_vec = {42};
     single_vec.sort();
-    assert(single_vec == Vector({42}));
+    EXPECT_EQ(single_vec, Vector({42}));
 
     // Descending Order
     reverse_vec.sort(std::greater<int>());
-    assert(reverse_vec == Vector({5, 4, 3, 2, 1}));
-
-    std::cout << "Vector sort tests passed!" << std::endl;
+    EXPECT_EQ(reverse_vec, Vector({5, 4, 3, 2, 1}));
 }
 
 // Run all tests
@@ -301,8 +287,3 @@ int main(int argc, char **argv) {
     ::testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
 }
-
-// int main() {
-//     test_vector();
-//     return 0;
-// }
