@@ -3,7 +3,6 @@
 #include <iostream>
 #include <cassert>
 
-void test_erase();
 void test_move_semantics();
 void test_copy_constructor();
 void test_copy_assignment();
@@ -13,7 +12,6 @@ void test_reverse_iterators();
 void test_vector_sort();
 
 void test_vector() {
-    test_erase();
     test_move_semantics();
     test_copy_constructor();
     test_copy_assignment();
@@ -144,32 +142,31 @@ TEST(VectorTest, TestInsert) {
     }
 }
 
-void test_erase() {
+TEST(VectorTest, TestErase) {
     CustomCXX::Vector<int> vec = {1, 2, 3, 4, 5};
 
     // Erase middle element
     vec.erase(2);
-    assert(vec[2] == 4);
-    assert(vec.size() == 4);
+    EXPECT_EQ(vec[2], 4);
+    EXPECT_EQ(vec.size(), 4);
 
     // Erase first element
     vec.erase(0);
-    assert(vec[0] == 2);
-    assert(vec.size() == 3);
+    EXPECT_EQ(vec[0], 2);
+    EXPECT_EQ(vec.size(), 3);
 
     // Erase last element
     vec.erase(vec.size() - 1);
-    assert(vec.size() == 2);
+    EXPECT_EQ(vec.size(), 2);
 
     // Handle invalid indices
     try {
         vec.erase(10);
-        assert(false); // Should not reach here
+        EXPECT_TRUE(false); // Should not reach here
     } catch (const std::out_of_range& e) {
-        assert(std::string(e.what()) == "Index out of range");
+        EXPECT_EQ(std::string(e.what()) == "Index out of range");
     }
 
-    std::cout << "Erase tests passed!" << std::endl;
 }
 
 void test_move_semantics() {
