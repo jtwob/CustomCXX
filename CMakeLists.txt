@@ -11,18 +11,16 @@ include_directories(include)
 # Google Test
 enable_testing()
 
-# GoogleTest: Fetch the library automatically
-if(EXISTS "${CMAKE_BINARY_DIR}/_deps/googletest-src")
-    message(STATUS "Using cached GoogleTest")
-else()
-    message(STATUS "Downloading GoogleTest")
-    include(FetchContent)
-    FetchContent_Declare(
-        googletest
-        URL https://github.com/google/googletest/archive/refs/heads/main.zip
-    )
-    FetchContent_MakeAvailable(googletest)
-endif()
+# GoogleTest: Fetch and build the library
+include(FetchContent)
+FetchContent_Declare(
+    googletest
+    URL https://github.com/google/googletest/archive/refs/tags/v1.14.0.zip
+)
+FetchContent_MakeAvailable(googletest)
+
+# Ensure GoogleTest is included
+include_directories(${gtest_SOURCE_DIR}/include)
 
 # Add the header-only library
 add_library(CustomCXX INTERFACE)
