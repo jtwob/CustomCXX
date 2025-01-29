@@ -3,13 +3,11 @@
 #include <iostream>
 #include <cassert>
 
-void test_reserve();
 void test_shrink_to_fit();
 void test_reverse_iterators();
 void test_vector_sort();
 
 void test_vector() {
-    test_reserve();
     test_shrink_to_fit();
     test_reverse_iterators();
     test_vector_sort();
@@ -217,19 +215,16 @@ TEST(VectorTest, TestCopyAssignment) {
     EXPECT_EQ(copy[0], 1);
 }
 
-
-void test_reserve(){
+TEST(VectorTest, TestReserve){
     CustomCXX::Vector<int> vec;
     vec.reserve(10);
-    assert(vec.capacity() >= 10);
-    assert(vec.size() == 0);
+    EXPECT_GE(vec.capacity(), 10);
+    EXPECT_EQ(vec.size(), 0);
 
     // Reserve less than current capacity
     size_t old_capacity = vec.capacity();
     vec.reserve(5);
-    assert(vec.capacity() == old_capacity);
-
-    std::cout << "Reserve tests passed!" << std::endl;
+    EXPECT_EQ(vec.capacity(), old_capacity);
 }
 
 void test_shrink_to_fit(){
