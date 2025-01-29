@@ -69,6 +69,8 @@ TEST(VectorTest, PopBack) {
     vec.pop_back();
     vec.pop_back();
     EXPECT_EQ(vec.size(), 0);
+    
+    // Underflow check
     try {
         vec.pop_back();
         EXPECT_TRUE(false); // Should not reach here
@@ -78,25 +80,25 @@ TEST(VectorTest, PopBack) {
 }
 
 TEST(VectorTest, TestSubscriptOperator) {
-    EXPECT_EQ(true, true);
+    CustomCXX::Vector<int> vec = {1, 2, 3};
+    EXPECT_EQ(vec[0], 1);
+    EXPECT_EQ(vec[1], 2);
+    EXPECT_EQ(vec[2], 3);
+
+    vec[0] = 10;
+    EXPECT_EQ(vec[0], 10);
+    
+    // Ensure out-of-range access throws an exception
+    try {
+        int x = vec[10]; // Should throw
+        EXPECT_TRUE(false);   // Should not reach here
+    } catch (const std::out_of_range& e) {
+        EXPECT_EQ(std::string(e.what()), "Index out of range");
+    }
 }
 
 // void test_subscript_operator() {
-//     CustomCXX::Vector<int> vec = {1, 2, 3};
-//     assert(vec[0] == 1);
-//     assert(vec[1] == 2);
-//     assert(vec[2] == 3);
 
-//     vec[0] = 10;
-//     assert(vec[0] == 10);
-
-//     // Ensure out-of-range access throws an exception
-//     try {
-//         int x = vec[10]; // Should throw
-//         assert(false);   // Should not reach here
-//     } catch (const std::out_of_range& e) {
-//         assert(std::string(e.what()) == "Index out of range");
-//     }
 
 //     std::cout << "Subscript operator tests passed!" << std::endl;
 // }
