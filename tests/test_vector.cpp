@@ -93,7 +93,7 @@ TEST(VectorTest, TestSubscriptOperator) {
         int x = vec[10]; // Should throw
         EXPECT_TRUE(false);   // Should not reach here
     } catch (const std::out_of_range& e) {
-        EXPECT_EQ(std::string(e.what()), "Index out of range");
+        EXPECT_EQ(std::string(e.what()), "Index out of range!");
     }
 }
 
