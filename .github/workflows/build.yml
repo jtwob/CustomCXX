@@ -17,13 +17,12 @@ jobs:
       uses: actions/checkout@v3
 
     # Cache system dependencies
-    - name: Cache APT Packages
+    - name: Cache APT packages
       uses: actions/cache@v3
       with:
-        path: /var/cache/apt/archives/*.deb
+        path: /var/lib/apt/lists
         key: apt-cache-${{ runner.os }}
-        restore-keys: |
-          apt-cache-
+        restore-keys: apt-cache-
 
     - name: Install Dependencies (Only If Cache Misses)
       run: |
