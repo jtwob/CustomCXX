@@ -94,17 +94,15 @@ TEST(MapTest, TestRehashing) {
     EXPECT_EQ(map.size(), 10); // Ensure all elements are present
 }
 
-
-void test_insert_or_assign() {
+TEST(MapTest, TestInsertOrAssign) {
     CustomCXX::Map<int, std::string> map;
 
     map.insert_or_assign(1, "one");
-    assert(map.contains(1) && map[1] == "one");
+    EXPECT_TRUE(map.contains(1)); 
+    EXPECT_EQ(map[1], "one");
 
     map.insert_or_assign(1, "uno"); // Update existing key
-    assert(map[1] == "uno");
-
-    std::cout << "insert_or_assign test passed!" << std::endl;
+    EXPECT_EQ(map[1], "uno");
 }
 
 void test_keys() {
