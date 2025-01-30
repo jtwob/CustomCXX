@@ -48,7 +48,7 @@ TEST(ListTest, TestInsert) {
     EXPECT_EQ(list.back(), 3);
 }
 
-void test_erase() {
+TEST(ListTest, TestErase) {
     CustomCXX::List<int> list;
     list.push_back(1);
     list.push_back(2);
@@ -56,47 +56,19 @@ void test_erase() {
 
     // Erase from the beginning
     list.erase(0);
-    assert(list.front() == 2);
-    assert(list.size() == 2);
+    EXPECT_EQ(list.front(), 2);
+    EXPECT_EQ(list.size(), 2);
 
     // Erase from the middle
     list.push_back(4);
     list.erase(1); // Should remove the element "3"
-    assert(list.at(1) == 4);
+    EXPECT_EQ(list.at(1), 4);
 
     // Erase from the end
     list.pop_back();
-    assert(list.back() == 2);
-    assert(list.size() == 1);
-
-    std::cout << "Erase tests passed!" << std::endl;
+    EXPECT_EQ(list.back(), 2);
+    EXPECT_EQ(list.size(), 1);
 }
-
-// void test_erase() {
-//     CustomCXX::List<int> list;
-//     list.push_back(1);
-//     list.push_back(2);
-//     list.push_back(3);
-
-//     // Erase from the beginning
-//     list.erase(0); // Removes "1"
-//     assert(list.size() == 2);
-//     assert(list.at(0) == 2);
-
-//     // Erase from the middle
-//     list.push_back(4); // [2, 3, 4]
-//     list.erase(1);     // Removes "3"
-//     assert(list.size() == 2);
-//     assert(list.at(0) == 2);
-//     assert(list.at(1) == 4);
-
-//     // Erase from the end
-//     list.pop_back(); // Removes "4"
-//     assert(list.size() == 1);
-//     assert(list.back() == 2);
-
-//     std::cout << "Erase tests passed!" << std::endl;
-// }
 
 void test_reverse() {
     CustomCXX::List<int> list;
