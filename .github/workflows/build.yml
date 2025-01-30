@@ -4,13 +4,12 @@ on:
   push:
     branches:
       - main
-      - feature/*
-      - structures/*
+      - gtest
   pull_request:
     branches:
       - main
-      - feature/*
-      - structures/*
+      - gtest
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -18,26 +17,45 @@ jobs:
     steps:
     - name: Checkout Code
       uses: actions/checkout@v3
-      
 
-    - name: Install Dependencies
+    - name: Cache CMake Build
+      uses: actions/cache@v3
+      with:
+        path: build
+        key: cmake-build-${{ runner.os }}-${{ github.ref }}
+        restore-keys: |
+          cmake-build-${{ runner.os }}-
+
+    - name: Cache GoogleTest
+      uses: actions/cache@v3
+      with:
+        path: ~/.cache/googletest
+        key: gtest-${{ runner.os }}
+        restore-keys: |
+          gtest-
+
+    - name: Install Dependencies (Only If Cache Misses)
       run: |
         sudo apt-get update
-        sudo apt-get install -y cmake g++ make
+        sudo apt-get install -y cmake g++ make ccache
 
-    - name: Configure Project with CMake
+    - name: Configure CMake with CCache
       run: |
-        cmake -S . -B build
+        cmake -S . -B build -DCMAKE_CXX_COMPILER_LAUNCHER=ccache
 
-    - name: Build Project
+    - name: Build Project (Parallel Build)
       run: |
-        cmake --build build
+        cmake --build build --parallel $(nproc)
 
-    - name: Run Tests
+    - name: Run Tests with CTest (Capture Output)
+      id: ctest_run
       run: |
-        ctest --test-dir build -C Debug --output-on-failure > build/test_output.log
+        cd build
+        ctest --output-on-failure | tee test_output.log
+        test ${PIPESTATUS[0]} -eq 0  # Fail the workflow if tests fail
 
     - name: Upload Test Log
+      if: always()  # Ensure artifact uploads even if previous step fails
       uses: actions/upload-artifact@v4
       with:
         name: test-log

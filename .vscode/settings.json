@@ -8,6 +8,7 @@
         "iterator": "cpp",
         "memory": "cpp",
         "vector": "cpp",
-        "initializer_list": "cpp"
+        "initializer_list": "cpp",
+        "fstream": "cpp"
     }
 }
