@@ -105,7 +105,7 @@ TEST(MapTest, TestInsertOrAssign) {
     EXPECT_EQ(map[1], "uno");
 }
 
-void test_keys() {
+TEST(MapTest, TestKeys) {
     CustomCXX::Map<int, std::string> map;
 
     map[1] = "one";
@@ -113,12 +113,10 @@ void test_keys() {
     map[3] = "three";
 
     auto key_list = map.keys();
-    assert(key_list.size() == 3);
-    assert(key_list[0] == 1 || key_list[1] == 1 || key_list[2] == 1);
-    assert(key_list[0] == 2 || key_list[1] == 2 || key_list[2] == 2);
-    assert(key_list[0] == 3 || key_list[1] == 3 || key_list[2] == 3);
-
-    std::cout << "Keys test passed!" << std::endl;
+    EXPECT_EQ(key_list.size(), 3);
+    EXPECT_TRUE(key_list[0] == 1 || key_list[1] == 1 || key_list[2] == 1);
+    EXPECT_TRUE(key_list[0] == 2 || key_list[1] == 2 || key_list[2] == 2);
+    EXPECT_TRUE(key_list[0] == 3 || key_list[1] == 3 || key_list[2] == 3);
 }
 
 // Run all tests
