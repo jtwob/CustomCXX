@@ -91,27 +91,20 @@ TEST(ListTest, TestReverse) {
     EXPECT_EQ(list.back(), 1);
 }
 
-void test_reverse() {
-
-    std::cout << "Reverse tests passed!" << std::endl;
-}
-
-void test_iterators() {
+TEST(ListTest, TestIterators) {
     CustomCXX::List<int> list = {1, 2, 3};
 
     // Forward iteration
     int expected = 1;
     for (auto node = list.begin(); node != list.end(); node = node->next) {
-        assert(node->value == expected++);
+        EXPECT_EQ(node->value, expected++);
     }
 
     // Reverse iteration
     expected = 3;
     for (auto node = list.rbegin(); node != list.rend(); node = node->prev) {
-        assert(node->value == expected--);
+        EXPECT_EQ(node->value, expected--);
     }
-
-    std::cout << "Iterator tests passed!" << std::endl;
 }
 
 void test_list_sort() {
