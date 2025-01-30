@@ -1,29 +1,7 @@
 #include "Map.h"
 #include <gtest/gtest.h>
 #include <iostream>
-#include <cassert>
 #include <string>
-
-void test_map();
-void test_erase_and_contains();
-void test_basic_operations();
-void test_operator_brackets();
-void test_erase_single_key();
-void test_contains_key_not_present();
-void test_rehashing();
-void test_insert_or_assign();
-void test_keys();
-
-void test_map() {
-    test_operator_brackets();
-    test_basic_operations();
-    test_erase_and_contains();
-    test_erase_single_key();
-    test_contains_key_not_present();
-    test_rehashing();
-    test_insert_or_assign();
-    test_keys();
-}
 
 TEST(MapTest, TestBasicOperations) {
     CustomCXX::Map<int, std::string> map;
