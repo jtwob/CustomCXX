@@ -1,4 +1,5 @@
 #include "Map.h"
+#include <gtest/gtest.h>
 #include <iostream>
 #include <cassert>
 #include <string>
@@ -24,7 +25,7 @@ void test_map() {
     test_keys();
 }
 
-void test_basic_operations() {
+TEST(MapTest, TestBasicOperations) {
     CustomCXX::Map<int, std::string> map;
 
     // Insert and access elements
@@ -40,8 +41,6 @@ void test_basic_operations() {
     // Overwrite a value
     map[1] = "uno";
     assert(map[1] == "uno");
-
-    std::cout << "Basic operations test passed!" << std::endl;
 }
 
 void test_erase_and_contains() {
@@ -130,8 +129,8 @@ void test_keys() {
     std::cout << "Keys test passed!" << std::endl;
 }
 
-int main() {
-    test_map();
-    std::cout << "All Map tests passed!" << std::endl;
-    return 0;
+// Run all tests
+int main(int argc, char **argv) {
+    ::testing::InitGoogleTest(&argc, argv);
+    return RUN_ALL_TESTS();
 }
