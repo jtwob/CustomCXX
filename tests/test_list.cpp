@@ -107,39 +107,37 @@ TEST(ListTest, TestIterators) {
     }
 }
 
-void test_list_sort() {
+TEST(ListTest, TestListSort) {
     using List = CustomCXX::List<int>;
 
     // Basic Case
     List list = {3, 1, 4, 1, 5, 9};
     list.sort();
-    assert(list == List({1, 1, 3, 4, 5, 9}));
+    EXPECT_EQ(list, List({1, 1, 3, 4, 5, 9}));
 
     // Already Sorted
     List sorted_list = {1, 2, 3, 4, 5};
     sorted_list.sort();
-    assert(sorted_list == List({1, 2, 3, 4, 5}));
+    EXPECT_EQ(sorted_list, List({1, 2, 3, 4, 5}));
 
     // Reverse Sorted
     List reverse_list = {5, 4, 3, 2, 1};
     reverse_list.sort();
-    assert(reverse_list == List({1, 2, 3, 4, 5}));
+    EXPECT_EQ(reverse_list, List({1, 2, 3, 4, 5}));
 
     // Empty List
     List empty_list;
     empty_list.sort();
-    assert(empty_list.size() == 0);
+    EXPECT_EQ(empty_list.size(), 0);
 
     // Single Element
     List single_list = {42};
     single_list.sort();
-    assert(single_list == List({42}));
+    EXPECT_EQ(single_list, List({42}));
 
     // Descending Order
     reverse_list.sort(std::greater<int>());
-    assert(reverse_list == List({5, 4, 3, 2, 1}));
-
-    std::cout << "List sort tests passed!" << std::endl;
+    EXPECT_EQ(reverse_list, List({5, 4, 3, 2, 1}));
 }
 
 // Run all tests
