@@ -85,15 +85,15 @@ TEST(MapTest, TestContainsKeyNotPresent) {
     EXPECT_TRUE(!map.contains(2)); // Should pass
 }
 
-void test_rehashing() {
+TEST(MapTest, TestRehashing) {
     CustomCXX::Map<int, std::string> map(4); // Small initial bucket count
     for (int i = 0; i < 10; ++i) {
         map[i] = "value" + std::to_string(i);
     }
 
-    assert(map.size() == 10); // Ensure all elements are present
-    std::cout << "Rehashing test passed!" << std::endl;
+    EXPECT_EQ(map.size(), 10); // Ensure all elements are present
 }
+
 
 void test_insert_or_assign() {
     CustomCXX::Map<int, std::string> map;
