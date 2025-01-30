@@ -32,18 +32,18 @@ TEST(MapTest, TestBasicOperations) {
     map[1] = "one";
     map[2] = "two";
 
-    assert(map[1] == "one");
-    assert(map[2] == "two");
+    EXPECT_EQ(map[1], "one");
+    EXPECT_EQ(map[2], "two");
 
     // Check size
-    assert(map.size() == 2);
+    EXPECT_EQ(map.size(), 2);
 
     // Overwrite a value
     map[1] = "uno";
-    assert(map[1] == "uno");
+    EXPECT_EQ(map[1], "uno");
 }
 
-void test_erase_and_contains() {
+TEST(MapTest, TestEraseAndContains) {
     CustomCXX::Map<int, std::string> map;
 
     map[1] = "one";
@@ -52,20 +52,17 @@ void test_erase_and_contains() {
 
     // Erase an element
     map.erase(2);
-    assert(!map.contains(2));
+    EXPECT_TRUE(!map.contains(2));
 
     // Check remaining elements
-    assert(map.contains(1));
-    assert(map.contains(3));
-
-    std::cout << "Erase and contains test passed!" << std::endl;
+    EXPECT_TRUE(map.contains(1));
+    EXPECT_TRUE(map.contains(3));
 }
 
-void test_operator_brackets() {
+TEST(MapTest, TestOperatorBrackets) {
     CustomCXX::Map<int, std::string> map;
     map[1] = "one";
-    assert(map[1] == "one");
-    std::cout << "Operator[] test passed!" << std::endl;
+    EXPECT_EQ(map[1], "one");
 }
 
 void test_erase_single_key() {
