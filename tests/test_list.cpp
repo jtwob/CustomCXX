@@ -1,21 +1,6 @@
 #include "List.h"
 #include <gtest/gtest.h>
 #include <iostream>
-#include <cassert>
-
-void test_insert();
-void test_erase();
-void test_reverse();
-void test_iterators();
-void test_list_sort();
-
-void test_list() {
-    test_insert();
-    test_erase();
-    test_reverse();
-    test_iterators();
-    test_list_sort();
-}
 
 TEST(ListTest, TestBasicList) {
     CustomCXX::List<int> list;
@@ -42,27 +27,25 @@ TEST(ListTest, TestBasicList) {
     EXPECT_TRUE(list.empty());
 }
 
-void test_insert() {
+TEST(ListTest, TestInsert) {
     CustomCXX::List<int> list;
 
     // Insert into an empty list
     list.insert(0, 1);
-    assert(list.size() == 1);
-    assert(list.front() == 1);
+    EXPECT_EQ(list.size(), 1);
+    EXPECT_EQ(list.front(), 1);
 
     // Insert at the beginning
     list.insert(0, 0);
-    assert(list.front() == 0);
+    EXPECT_EQ(list.front(), 0);
 
     // Insert in the middle
     list.insert(1, 2);
-    assert(list.at(1) == 2);
+    EXPECT_EQ(list.at(1), 2);
 
     // Insert at the end
     list.insert(3, 3);
-    assert(list.back() == 3);
-
-    std::cout << "Insert tests passed!" << std::endl;
+    EXPECT_EQ(list.back(), 3);
 }
 
 void test_erase() {
