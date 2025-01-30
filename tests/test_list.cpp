@@ -70,23 +70,28 @@ TEST(ListTest, TestErase) {
     EXPECT_EQ(list.size(), 1);
 }
 
-void test_reverse() {
+TEST(ListTest, TestReverse) {
     CustomCXX::List<int> list;
 
     // Reverse an empty list
     list.reverse();
-    assert(list.size() == 0);
+    EXPECT_EQ(list.size(), 0);
 
     // Reverse a single-element list
     list.push_back(1);
     list.reverse();
-    assert(list.front() == 1 && list.back() == 1);
+    EXPECT_EQ(list.front(), 1);
+    EXPECT_EQ(list.back(), 1);
 
     // Reverse a multi-element list
     list.push_back(2);
     list.push_back(3);
     list.reverse();
-    assert(list.front() == 3 && list.back() == 1);
+    EXPECT_EQ(list.front(), 3); 
+    EXPECT_EQ(list.back(), 1);
+}
+
+void test_reverse() {
 
     std::cout << "Reverse tests passed!" << std::endl;
 }
