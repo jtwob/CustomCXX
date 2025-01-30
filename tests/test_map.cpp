@@ -65,16 +65,19 @@ TEST(MapTest, TestOperatorBrackets) {
     EXPECT_EQ(map[1], "one");
 }
 
-void test_erase_single_key() {
+TEST(MapTest, TestEraseSingleKey) {
     CustomCXX::Map<int, std::string> map;
 
     map[1] = "one";
     map[2] = "two";
 
-    assert(map.contains(1));
+    EXPECT_TRUE(map.contains(1));
     map.erase(1);
-    assert(!map.contains(1)); // Should pass
-    assert(map.contains(2));  // Other keys should remain intact
+    EXPECT_TRUE(!map.contains(1)); // Should pass
+    EXPECT_TRUE(map.contains(2));  // Other keys should remain intact
+}
+
+void test_erase_single_key() {
 
     std::cout << "Erase single key test passed!" << std::endl;
 }
