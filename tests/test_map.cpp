@@ -77,18 +77,12 @@ TEST(MapTest, TestEraseSingleKey) {
     EXPECT_TRUE(map.contains(2));  // Other keys should remain intact
 }
 
-void test_erase_single_key() {
-
-    std::cout << "Erase single key test passed!" << std::endl;
-}
-
-void test_contains_key_not_present() {
+TEST(MapTest, TestContainsKeyNotPresent) {
     CustomCXX::Map<int, std::string> map;
 
     map[1] = "one";
 
-    assert(!map.contains(2)); // Should pass
-    std::cout << "Contains key not present test passed!" << std::endl;
+    EXPECT_TRUE(!map.contains(2)); // Should pass
 }
 
 void test_rehashing() {
