@@ -134,7 +134,7 @@ namespace CustomCXX {
      */
     template <typename Key, typename Value>
     void Map<Key, Value>::insert_or_assign(const Key& key, const Value& value) {
-        if (size_ > 0.75 * bucket_count) {
+        if (size_ > Map.LOAD_FACTOR_THRESHOLD * bucket_count) {
             rehash(bucket_count * 2);
         }
 
