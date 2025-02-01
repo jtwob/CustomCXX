@@ -3,12 +3,10 @@ name: Build and Test
 on:
   push:
     branches:
-      - main
-      - gtest
+      - valgrind
   pull_request:
     branches:
-      - main
-      - gtest
+      - valgrind
 
 jobs:
   build:
@@ -37,7 +35,7 @@ jobs:
     - name: Install Dependencies (Only If Cache Misses)
       run: |
         sudo apt-get update
-        sudo apt-get install -y cmake g++ make ccache
+        sudo apt-get install -y cmake g++ make ccache valgrind
 
     - name: Configure CMake with CCache
       run: |
@@ -55,8 +53,24 @@ jobs:
         test ${PIPESTATUS[0]} -eq 0  # Fail the workflow if tests fail
 
     - name: Upload Test Log
-      if: always()  # Ensure artifact uploads even if previous step fails
+      if: always()
       uses: actions/upload-artifact@v4
       with:
         name: test-log
         path: build/test_output.log
+
+    # Run Tests with Valgrind
+    - name: Run Valgrind Memory Check
+      id: valgrind_run
+      run: |
+        cd build
+        valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --error-exitcode=1 ./CustomCXXTests_Vector | tee valgrind_vector.log
+        valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --error-exitcode=1 ./CustomCXXTests_List | tee valgrind_list.log
+        valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --error-exitcode=1 ./CustomCXXTests_Map | tee valgrind_map.log
+
+    - name: Upload Valgrind Logs
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: valgrind-logs
+        path: build/valgrind_*.log

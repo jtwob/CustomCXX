@@ -19,6 +19,19 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(googletest)
 
+# Define a function to run tests under Valgrind
+function(add_valgrind_test TEST_NAME EXECUTABLE)
+    add_test(
+        NAME ${TEST_NAME}_Valgrind
+        COMMAND valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --error-exitcode=1 ./${EXECUTABLE}
+    )
+endfunction()
+
+# Add Valgrind tests for each test executable
+add_valgrind_test(CustomCXXTests_Vector CustomCXXTests_Vector)
+add_valgrind_test(CustomCXXTests_List CustomCXXTests_List)
+add_valgrind_test(CustomCXXTests_Map CustomCXXTests_Map)
+
 # Add the header-only library
 add_library(CustomCXX INTERFACE)
 target_include_directories(CustomCXX INTERFACE include)
