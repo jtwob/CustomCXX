@@ -89,6 +89,14 @@ Build and run the tests:
  ctest --test-dir build -C Debug --output-on-failure
 ```
 
+## Memory Leak Detection with Valgrind
+To check for memory issues:
+```bash
+ valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./build/CustomCXXTests_Vector
+ valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./build/CustomCXXTests_List
+ valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./build/CustomCXXTests_Map
+```
+
 ## Future Enhancements
 - Additional Algorithms (e.g., binary search, quicksort)
 - New Data Structures (e.g., tree-based maps, heaps, priority queues)
