@@ -1,28 +1,40 @@
 # CustomCXX
-<img src="https://img.shields.io/badge/LICENSE-mit-green"/>
+![LICENSE](https://img.shields.io/badge/LICENSE-MIT-green)
+![Testing](https://img.shields.io/badge/Testing-GoogleTest-blue)
+![Memory Check](https://img.shields.io/badge/Memory%20Check-Valgrind-critical)
+
 A lightweight C++ library implementing core data structures (`Vector`, `List`, and `Map`) with robust features, sorting algorithms, and comprehensive test coverage.
 
+---
+
 ## Features
-- **Dynamic Array (`Vector`)**: Supports push-back, resizing, sorting, and iterator functionality.
-- **Doubly Linked List (`List`)**: Provides efficient insertion, deletion, traversal, and sorting with merge sort.
-- **Hash Map (`Map`)**: Implements key-value storage with dynamic rehashing, collision handling, and retrieval of all keys.
-- Fully templated for generic use.
-- Sorting support for `Vector` and `List` with default and custom comparator functions.
+✅ **Dynamic Array (`Vector`)**: Supports push-back, resizing, sorting, and iterator functionality.  
+✅ **Doubly Linked List (`List`)**: Provides efficient insertion, deletion, traversal, and sorting with merge sort.  
+✅ **Hash Map (`Map`)**: Implements key-value storage with dynamic rehashing, collision handling, and retrieval of all keys.  
+✅ **Sorting Support**: `Vector` and `List` include built-in sorting with **default** and **custom comparator functions**.  
+✅ **Unit Testing**: Uses **GoogleTest (GTest)** for structured testing.  
+✅ **Memory Leak Detection**: Integrated **Valgrind** ensures memory safety.  
+
+---
 
 ## Why CustomCXX?
-This project is designed as a learning tool for aspiring C++ developers. It demonstrates:
-- Advanced use of templates and generic programming.
-- Efficient memory management techniques.
-- Modern C++ best practices (C++17+).
-- The integration of custom data structures into practical applications.
+This project is designed as a **learning tool** for aspiring C++ developers. It demonstrates:  
+🔹 **Advanced use of templates and generic programming**  
+🔹 **Efficient memory management techniques**  
+🔹 **Modern C++ best practices (C++17+)**  
+🔹 **The integration of custom data structures into practical applications**  
+
+---
 
 ## Getting Started
 ### Prerequisites
-- C++17 or later
-- CMake (for building the project)
+- **C++17 or later**
+- **CMake** (for building the project)
+- **GoogleTest** (included in the build)
+- **Valgrind** (for memory checks, optional but recommended)
 
 ### Installation
-Clone the repository and build using CMake:
+Clone the repository and build using CMake:  
 ```bash
 git clone https://github.com/jtwob/CustomCXX.git
 cd CustomCXX
