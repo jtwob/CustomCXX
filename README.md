@@ -107,3 +107,5 @@ To check for memory issues:
 Aspiring software developer with a passion for crossdisciplinary projects. This project showcases robust implementations of core data structures (`Vector`, `List`, and `Map`) as part of my journey to mastering modern C++. I aim to create tools and libraries that are educational, efficient, and reusable.
 
 Reach out to me on [GitHub](https://github.com/jtwob) or [LinkedIn](https://www.linkedin.com/in/james-totah-337714188/) to discuss ideas or collaborate on future projects!
+
+Last Checked 5/18/25
