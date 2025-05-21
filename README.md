@@ -108,4 +108,4 @@ Aspiring software developer with a passion for crossdisciplinary projects. This 
 
 Reach out to me on [GitHub](https://github.com/jtwob) or [LinkedIn](https://www.linkedin.com/in/james-totah-337714188/) to discuss ideas or collaborate on future projects!
 
-Last Checked 5/18/25
+Last Checked 5/20/25
