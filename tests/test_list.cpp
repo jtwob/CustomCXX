@@ -1,5 +1,6 @@
 #include "List.h"
 #include <gtest/gtest.h>
+#include <cstdlib>
 #include <iostream>
 
 TEST(ListTest, TestBasicList) {
@@ -138,6 +139,67 @@ TEST(ListTest, TestListSort) {
     // Descending Order
     reverse_list.sort(std::greater<int>());
     EXPECT_EQ(reverse_list, List({5, 4, 3, 2, 1}));
+}
+
+TEST(ListTest, SortMaintainsBidirectionalLinks) {
+    CustomCXX::List<int> list = {4, 2, 5, 1, 3};
+    list.sort();
+
+    int expected_forward = 1;
+    size_t forward_count = 0;
+    for (auto node = list.begin(); node != list.end(); node = node->next) {
+        EXPECT_EQ(node->value, expected_forward++);
+        if (node->next) {
+            EXPECT_EQ(node->next->prev, node);
+        }
+        ++forward_count;
+    }
+    EXPECT_EQ(forward_count, list.size());
+
+    int expected_reverse = 5;
+    size_t reverse_count = 0;
+    for (auto node = list.rbegin(); node != list.rend(); node = node->prev) {
+        EXPECT_EQ(node->value, expected_reverse--);
+        if (node->prev) {
+            EXPECT_EQ(node->prev->next, node);
+        }
+        ++reverse_count;
+    }
+    EXPECT_EQ(reverse_count, list.size());
+}
+
+TEST(ListTest, CopyConstructorCreatesIndependentListAndDestroysSafely) {
+    ASSERT_EXIT(
+        ([]() {
+            CustomCXX::List<int> original = {1, 2, 3};
+            CustomCXX::List<int> copy(original);
+
+            copy.at(0) = 42;
+            if (original.at(0) == 42) {
+                std::exit(2);
+            }
+            std::exit(0);
+        })(),
+        ::testing::ExitedWithCode(0),
+        "");
+}
+
+TEST(ListTest, CopyAssignmentCreatesIndependentListAndDestroysSafely) {
+    ASSERT_EXIT(
+        ([]() {
+            CustomCXX::List<int> original = {1, 2, 3};
+            CustomCXX::List<int> copy;
+            copy.push_back(9);
+            copy = original;
+
+            copy.at(1) = 77;
+            if (original.at(1) == 77) {
+                std::exit(2);
+            }
+            std::exit(0);
+        })(),
+        ::testing::ExitedWithCode(0),
+        "");
 }
 
 // Run all tests

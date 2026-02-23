@@ -249,6 +249,11 @@ TEST(VectorTest, TestReverseIterator) {
     EXPECT_EQ(single_vec.rend(), single_vec.begin() - 1);
 }
 
+TEST(VectorTest, EmptyReverseRangeIsEmpty) {
+    CustomCXX::Vector<int> vec;
+    EXPECT_EQ(vec.rbegin(), vec.rend());
+}
+
 TEST(VectorTest, TestVectorSort) {
     using Vector = CustomCXX::Vector<int>;
 

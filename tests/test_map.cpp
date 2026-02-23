@@ -2,6 +2,7 @@
 #include <gtest/gtest.h>
 #include <iostream>
 #include <string>
+#include <cstdlib>
 
 TEST(MapTest, TestBasicOperations) {
     CustomCXX::Map<int, std::string> map;
@@ -95,6 +96,21 @@ TEST(MapTest, TestKeys) {
     EXPECT_TRUE(key_list[0] == 1 || key_list[1] == 1 || key_list[2] == 1);
     EXPECT_TRUE(key_list[0] == 2 || key_list[1] == 2 || key_list[2] == 2);
     EXPECT_TRUE(key_list[0] == 3 || key_list[1] == 3 || key_list[2] == 3);
+}
+
+TEST(MapTest, ZeroBucketConstructorStillUsable) {
+    ASSERT_EXIT(
+        ([]() {
+            CustomCXX::Map<int, std::string> map(0);
+            map[1] = "one";
+            map.insert_or_assign(2, "two");
+            if (!map.contains(1) || !map.contains(2) || map.size() != 2) {
+                std::exit(3);
+            }
+            std::exit(0);
+        })(),
+        ::testing::ExitedWithCode(0),
+        "");
 }
 
 // Run all tests
